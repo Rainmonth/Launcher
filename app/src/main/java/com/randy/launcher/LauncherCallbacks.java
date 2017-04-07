@@ -29,85 +29,134 @@ public interface LauncherCallbacks {
      * Activity life-cycle methods. These methods are triggered after
      * the code in the corresponding Launcher method is executed.
      */
-    public void preOnCreate();
-    public void onCreate(Bundle savedInstanceState);
-    public void preOnResume();
-    public void onResume();
-    public void onStart();
-    public void onStop();
-    public void onPause();
-    public void onDestroy();
-    public void onSaveInstanceState(Bundle outState);
-    public void onPostCreate(Bundle savedInstanceState);
-    public void onNewIntent(Intent intent);
-    public void onActivityResult(int requestCode, int resultCode, Intent data);
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults);
-    public void onWindowFocusChanged(boolean hasFocus);
-    public boolean onPrepareOptionsMenu(Menu menu);
-    public void dump(String prefix, FileDescriptor fd, PrintWriter w, String[] args);
-    public void onHomeIntent();
-    public boolean handleBackPressed();
-    public void onTrimMemory(int level);
+    void preOnCreate();
+
+    void onCreate(Bundle savedInstanceState);
+
+    void preOnResume();
+
+    void onResume();
+
+    void onStart();
+
+    void onStop();
+
+    void onPause();
+
+    void onDestroy();
+
+    void onSaveInstanceState(Bundle outState);
+
+    void onPostCreate(Bundle savedInstanceState);
+
+    void onNewIntent(Intent intent);
+
+    void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                    int[] grantResults);
+
+    void onWindowFocusChanged(boolean hasFocus);
+
+    boolean onPrepareOptionsMenu(Menu menu);
+
+    void dump(String prefix, FileDescriptor fd, PrintWriter w, String[] args);
+
+    void onHomeIntent();
+
+    boolean handleBackPressed();
+
+    void onTrimMemory(int level);
 
     /*
      * Extension points for providing custom behavior on certain user interactions.
      */
-    public void onLauncherProviderChange();
-    public void finishBindingItems(final boolean upgradePath);
-    public void onClickAllAppsButton(View v);
-    public void bindAllApplications(ArrayList<AppInfo> apps);
-    public void onClickFolderIcon(View v);
-    public void onClickAppShortcut(View v);
+    void onLauncherProviderChange();
+
+    void finishBindingItems(final boolean upgradePath);
+
+    void onClickAllAppsButton(View v);
+
+    void bindAllApplications(ArrayList<AppInfo> apps);
+
+    void onClickFolderIcon(View v);
+
+    void onClickAppShortcut(View v);
+
     @Deprecated
-    public void onClickPagedViewIcon(View v);
-    public void onClickWallpaperPicker(View v);
-    public void onClickSettingsButton(View v);
-    public void onClickAddWidgetButton(View v);
-    public void onPageSwitch(View newPage, int newPageIndex);
-    public void onWorkspaceLockedChanged();
-    public void onDragStarted(View view);
-    public void onInteractionBegin();
-    public void onInteractionEnd();
+    void onClickPagedViewIcon(View v);
+
+    void onClickWallpaperPicker(View v);
+
+    void onClickSettingsButton(View v);
+
+    void onClickAddWidgetButton(View v);
+
+    void onPageSwitch(View newPage, int newPageIndex);
+
+    void onWorkspaceLockedChanged();
+
+    void onDragStarted(View view);
+
+    void onInteractionBegin();
+
+    void onInteractionEnd();
 
     /*
      * Extension points for replacing the search experience
      */
     @Deprecated
-    public boolean forceDisableVoiceButtonProxy();
-    public boolean providesSearch();
-    public boolean startSearch(String initialQuery, boolean selectInitialQuery,
-                               Bundle appSearchData, Rect sourceBounds);
-    public boolean startSearchFromAllApps(String query);
+    boolean forceDisableVoiceButtonProxy();
+
+    boolean providesSearch();
+
+    boolean startSearch(String initialQuery, boolean selectInitialQuery,
+                        Bundle appSearchData, Rect sourceBounds);
+
+    boolean startSearchFromAllApps(String query);
+
     @Deprecated
-    public void startVoice();
-    public boolean hasCustomContentToLeft();
-    public void populateCustomContentContainer();
-    public View getQsbBar();
+    void startVoice();
+
+    boolean hasCustomContentToLeft();
+
+    void populateCustomContentContainer();
+
+    View getQsbBar();
 
     /*
      * Extensions points for adding / replacing some other aspects of the Launcher experience.
      */
-    public Intent getFirstRunActivity();
-    public boolean hasFirstRunActivity();
-    public boolean hasDismissableIntroScreen();
-    public View getIntroScreen();
-    public boolean shouldMoveToDefaultScreenOnHomeIntent();
-    public boolean hasSettings();
+    Intent getFirstRunActivity();
+
+    boolean hasFirstRunActivity();
+
+    boolean hasDismissableIntroScreen();
+
+    View getIntroScreen();
+
+    boolean shouldMoveToDefaultScreenOnHomeIntent();
+
+    boolean hasSettings();
+
     @Deprecated
-    public ComponentName getWallpaperPickerComponent();
-    public boolean overrideWallpaperDimensions();
-    public boolean isLauncherPreinstalled();
-    public AllAppsSearchBarController getAllAppsSearchBarController();
-    public List<ComponentKey> getPredictedApps();
+    ComponentName getWallpaperPickerComponent();
+
+    boolean overrideWallpaperDimensions();
+
+    boolean isLauncherPreinstalled();
+
+    AllAppsSearchBarController getAllAppsSearchBarController();
+
+    List<ComponentKey> getPredictedApps();
 
     /**
-     * Returning true will immediately result in a call to {@link #setLauncherOverlayView(ViewGroup,
-     * Launcher.LauncherOverlayCallbacks)}.
+     * Returning true will immediately result in a call to {@link #setLauncherOverlayView(
+     *InsettableFrameLayout, Launcher.LauncherOverlayCallbacks)}.
      *
      * @return true if this launcher extension will provide an overlay
      */
-    public boolean hasLauncherOverlay();
+    boolean hasLauncherOverlay();
 
     /**
      * Handshake to establish an overlay relationship
@@ -116,8 +165,8 @@ public interface LauncherCallbacks {
      * @param callbacks A set of callbacks provided by Launcher in relation to the overlay
      * @return an interface used to make requests and notify the Launcher in relation to the overlay
      */
-    public Launcher.LauncherOverlay setLauncherOverlayView(InsettableFrameLayout container,
-                                                           Launcher.LauncherOverlayCallbacks callbacks);
+    Launcher.LauncherOverlay setLauncherOverlayView(InsettableFrameLayout container,
+                                                    Launcher.LauncherOverlayCallbacks callbacks);
 
     /**
      * Sets the callbacks to allow reacting the actions of search overlays of the launcher.
@@ -125,5 +174,5 @@ public interface LauncherCallbacks {
      * @param callbacks A set of callbacks to the Launcher, is actually a LauncherSearchCallback,
      *                  but for implementation purposes is passed around as an object.
      */
-    public void setLauncherSearchCallback(Object callbacks);
+    void setLauncherSearchCallback(Object callbacks);
 }
