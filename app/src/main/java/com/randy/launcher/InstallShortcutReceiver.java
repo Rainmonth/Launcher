@@ -51,7 +51,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     private static final boolean DBG = false;
 
     private static final String ACTION_INSTALL_SHORTCUT =
-            "com.android.launcher.action.INSTALL_SHORTCUT";
+            "com.randy.launcher.action.INSTALL_SHORTCUT";
 
     private static final String LAUNCH_INTENT_KEY = "intent.launch";
     private static final String NAME_KEY = "name";

@@ -3,29 +3,29 @@
     package="com.randy.launcher">
 
     <permission
-        android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
+        android:name="com.randy.launcher.permission.INSTALL_SHORTCUT"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="dangerous"
         android:label="@string/permlab_install_shortcut"
         android:description="@string/permdesc_install_shortcut" />
     <permission
-        android:name="com.android.launcher3.permission.READ_SETTINGS"
+        android:name="com.randy.launcher.permission.READ_SETTINGS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="normal"
         android:label="@string/permlab_read_settings"
         android:description="@string/permdesc_read_settings"/>
     <permission
-        android:name="com.android.launcher3.permission.WRITE_SETTINGS"
+        android:name="com.randy.launcher.permission.WRITE_SETTINGS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signatureOrSystem"
         android:label="@string/permlab_write_settings"
         android:description="@string/permdesc_write_settings"/>
     <permission
-        android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS"
+        android:name="com.randy.launcher.permission.RECEIVE_LAUNCH_BROADCASTS"
         android:protectionLevel="signature"
         />
     <permission
-        android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST"
+        android:name="com.randy.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST"
         android:protectionLevel="signatureOrSystem" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -36,12 +36,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS" />
-    <uses-permission android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
+    <uses-permission android:name="com.randy.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.randy.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.randy.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.randy.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.randy.launcher.permission.RECEIVE_LAUNCH_BROADCASTS" />
+    <uses-permission android:name="com.randy.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
 
     <application
         android:allowBackup="@bool/enable_backup"
@@ -172,7 +172,7 @@
             android:name="com.randy.launcher.InstallShortcutReceiver"
             android:permission="com.randy.launcher.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
-                <action android:name="com.android.launcher.action.INSTALL_SHORTCUT" />
+                <action android:name="com.randy.launcher.action.INSTALL_SHORTCUT" />
             </intent-filter>
         </receiver>
 
@@ -194,8 +194,8 @@
             android:name="com.randy.launcher.LauncherProvider"
             android:authorities="com.android.launcher3.settings"
             android:exported="true"
-            android:writePermission="com.android.launcher3.permission.WRITE_SETTINGS"
-            android:readPermission="com.android.launcher3.permission.READ_SETTINGS" />
+            android:writePermission="com.randy.launcher.permission.WRITE_SETTINGS"
+            android:readPermission="com.randy.launcher.permission.READ_SETTINGS" />
 
         <meta-data android:name="android.nfc.disable_beam_default"
             android:value="true" />
