@@ -183,7 +183,8 @@ public class Launcher extends Activity
     static final boolean DEBUG_RESUME_TIME = false;
     static final boolean DEBUG_DUMP_LOG = false;
 
-    static final boolean ENABLE_DEBUG_INTENTS = false; // allow DebugIntents to run
+    // allow DebugIntents to run
+    static final boolean ENABLE_DEBUG_INTENTS = false;
 
     private static final int REQUEST_CREATE_SHORTCUT = 1;
     private static final int REQUEST_CREATE_APPWIDGET = 5;

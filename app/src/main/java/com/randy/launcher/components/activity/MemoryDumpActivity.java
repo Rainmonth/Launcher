@@ -30,7 +30,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.randy.launcher.MemoryTracker;
+import com.randy.launcher.components.service.MemoryTracker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

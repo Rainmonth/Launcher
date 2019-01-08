@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.randy.launcher;
+package com.randy.launcher.components.service;
 
 import android.app.ActivityManager;
 import android.app.Service;

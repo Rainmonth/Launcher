@@ -29,6 +29,7 @@ import com.randy.launcher.compat.PackageInstallerCompat;
 import com.randy.launcher.compat.UserManagerCompat;
 import com.randy.launcher.components.provider.LauncherProvider;
 import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.components.service.MemoryTracker;
 import com.randy.launcher.config.LauncherFiles;
 import com.randy.launcher.ui.widget.WidgetPreviewLoader;
 import com.randy.launcher.util.InvariantDeviceProfile;

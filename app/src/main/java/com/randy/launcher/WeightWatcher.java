@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.randy.launcher.components.service.MemoryTracker;
 import com.randy.launcher.util.Thunk;
 
 public class WeightWatcher extends LinearLayout {

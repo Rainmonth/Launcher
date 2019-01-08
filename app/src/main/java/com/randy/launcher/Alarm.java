@@ -20,7 +20,11 @@ import android.os.Handler;
 
 import com.randy.launcher.impl.OnAlarmListener;
 
-public class Alarm implements Runnable{
+/**
+ * 可以取消执行的Runnable（实际上是通过增加bool变量来控制是否真正只想OnAlarmListener的onAlarm方法的
+ * @author randy
+ */
+public class Alarm implements Runnable {
     // if we reach this time and the alarm hasn't been cancelled, call the listener
     private long mAlarmTriggerTime;
 
@@ -58,6 +62,7 @@ public class Alarm implements Runnable{
     }
 
     // this is called when our timer runs out
+    @Override
     public void run() {
         mWaitingForCallback = false;
         if (mAlarmTriggerTime != 0) {

@@ -155,7 +155,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.randy.launcher.MemoryTracker"
+        <service android:name="com.randy.launcher.components.service.MemoryTracker"
             android:enabled="@bool/debug_memory_enabled"
             >
         </service>

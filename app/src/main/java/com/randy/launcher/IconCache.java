@@ -567,16 +567,20 @@ public class IconCache {
                         CacheEntry packageEntry = getEntryForPackageLocked(
                                 componentName.getPackageName(), user, false);
                         if (packageEntry != null) {
-                            if (DEBUG) Log.d(TAG, "using package default icon for " +
-                                    componentName.toShortString());
+                            if (DEBUG) {
+                                Log.d(TAG, "using package default icon for " +
+                                        componentName.toShortString());
+                            }
                             entry.icon = packageEntry.icon;
                             entry.title = packageEntry.title;
                             entry.contentDescription = packageEntry.contentDescription;
                         }
                     }
                     if (entry.icon == null) {
-                        if (DEBUG) Log.d(TAG, "using default icon for " +
-                                componentName.toShortString());
+                        if (DEBUG) {
+                            Log.d(TAG, "using default icon for " +
+                                    componentName.toShortString());
+                        }
                         entry.icon = getDefaultIcon(user);
                     }
                 }
@@ -657,7 +661,9 @@ public class IconCache {
                             mUserManager.getSerialNumberForUser(user));
 
                 } catch (NameNotFoundException e) {
-                    if (DEBUG) Log.d(TAG, "Application not installed " + packageName);
+                    if (DEBUG) {
+                        Log.d(TAG, "Application not installed " + packageName);
+                    }
                     entryUpdated = false;
                 }
             }
