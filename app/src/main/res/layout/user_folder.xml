@@ -14,7 +14,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.randy.launcher.widget.Folder xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randy.launcher.ui.Folder xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:launcher="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -29,12 +29,12 @@
 
         <!-- Actual size of the indicator doesn't matter as it is scaled to match the view size -->
 
-        <com.randy.launcher.FocusIndicatorView
+        <com.randy.launcher.ui.view.main.FocusIndicatorView
             android:id="@+id/focus_indicator"
             android:layout_width="20dp"
             android:layout_height="20dp" />
 
-        <com.randy.launcher.widget.FolderPagedView
+        <com.randy.launcher.ui.FolderPagedView
             android:id="@+id/folder_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,7 +53,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp" >
 
-        <com.randy.launcher.ExtendedEditText
+        <com.randy.launcher.ui.view.main.ExtendedEditText
             android:id="@+id/folder_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -81,4 +81,4 @@
 
     </LinearLayout>
 
-</com.randy.launcher.widget.Folder>
+</com.randy.launcher.ui.Folder>

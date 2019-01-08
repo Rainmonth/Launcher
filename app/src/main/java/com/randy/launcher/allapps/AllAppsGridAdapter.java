@@ -38,10 +38,10 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
 
 import com.randy.launcher.beans.AppInfo;
-import com.randy.launcher.widget.BubbleTextView;
+import com.randy.launcher.ui.BubbleTextView;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.R;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.Thunk;
 
 import java.util.HashMap;

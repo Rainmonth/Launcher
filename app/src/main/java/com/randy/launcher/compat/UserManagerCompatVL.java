@@ -26,7 +26,7 @@ import android.os.Build;
 import android.os.UserHandle;
 
 import com.randy.launcher.LauncherAppState;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.LongArrayMap;
 
 import java.util.ArrayList;

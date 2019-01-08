@@ -35,7 +35,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.randy.launcher.R;
-import com.randy.launcher.WallpaperPickerActivity;
+import com.randy.launcher.components.activity.WallpaperPickerActivity;
 import com.randy.launcher.util.Thunk;
 
 import org.xmlpull.v1.XmlPullParserException;

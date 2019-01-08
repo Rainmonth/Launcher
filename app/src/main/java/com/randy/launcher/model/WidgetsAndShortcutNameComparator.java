@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
-import com.randy.launcher.LauncherAppWidgetProviderInfo;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.compat.AppWidgetManagerCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.util.ComponentKey;

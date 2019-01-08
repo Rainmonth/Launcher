@@ -100,6 +100,7 @@ import com.randy.launcher.allapps.AllAppsContainerView;
 import com.randy.launcher.beans.AppInfo;
 import com.randy.launcher.beans.FolderInfo;
 import com.randy.launcher.beans.ItemInfo;
+import com.randy.launcher.beans.LauncherAppWidgetInfo;
 import com.randy.launcher.beans.PendingAddItemInfo;
 import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.compat.AppWidgetManagerCompat;
@@ -107,27 +108,49 @@ import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
-import com.randy.launcher.impl.CustomAppWidget;
+import com.randy.launcher.components.activity.MemoryDumpActivity;
+import com.randy.launcher.components.activity.SettingsActivity;
+import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
+import com.randy.launcher.components.receiver.InstallShortcutReceiver;
+import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.config.LauncherSettings;
+import com.randy.launcher.ui.animator.LauncherStateTransitionAnimation;
+import com.randy.launcher.ui.animator.LogDecelerateInterpolator;
+import com.randy.launcher.ui.animator.WorkspaceStateTransitionAnimation;
+import com.randy.launcher.ui.view.DragController;
+import com.randy.launcher.ui.view.DragLayer;
+import com.randy.launcher.ui.widget.CustomAppWidget;
 import com.randy.launcher.impl.DragSource;
 import com.randy.launcher.impl.DropTarget;
 import com.randy.launcher.impl.LauncherCallbacks;
 import com.randy.launcher.impl.LauncherProviderChangeListener;
 import com.randy.launcher.model.WidgetsModel;
+import com.randy.launcher.ui.widget.DummyWidget;
+import com.randy.launcher.ui.widget.LauncherAppWidgetHost;
+import com.randy.launcher.ui.widget.PendingAppWidgetHostView;
 import com.randy.launcher.util.ComponentKey;
+import com.randy.launcher.util.DeviceProfile;
+import com.randy.launcher.util.LauncherAnimUtils;
 import com.randy.launcher.util.LongArrayMap;
 import com.randy.launcher.util.Thunk;
-import com.randy.launcher.widget.BubbleTextView;
-import com.randy.launcher.widget.Folder;
-import com.randy.launcher.widget.FolderIcon;
-import com.randy.launcher.widget.PendingAddWidgetInfo;
-import com.randy.launcher.widget.WidgetHostViewLoader;
-import com.randy.launcher.widget.WidgetsContainerView;
-import com.randy.launcher.widget.base.InsettableFrameLayout;
-import com.randy.launcher.widget.main.CellLayout;
-import com.randy.launcher.widget.main.DragView;
-import com.randy.launcher.widget.main.HotSeat;
-import com.randy.launcher.widget.main.PagedView;
-import com.randy.launcher.widget.main.Workspace;
+import com.randy.launcher.util.Utilities;
+import com.randy.launcher.ui.BubbleTextView;
+import com.randy.launcher.ui.FastBitmapDrawable;
+import com.randy.launcher.ui.Folder;
+import com.randy.launcher.ui.FolderIcon;
+import com.randy.launcher.ui.LauncherAppWidgetHostView;
+import com.randy.launcher.beans.PendingAddWidgetInfo;
+import com.randy.launcher.ui.widget.WidgetHostViewLoader;
+import com.randy.launcher.ui.widget.WidgetsContainerView;
+import com.randy.launcher.ui.view.base.InsettableFrameLayout;
+import com.randy.launcher.ui.view.main.CellLayout;
+import com.randy.launcher.ui.view.main.DragView;
+import com.randy.launcher.ui.view.main.FocusIndicatorView;
+import com.randy.launcher.ui.view.main.HotSeat;
+import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.main.SearchDropTargetBar;
+import com.randy.launcher.ui.view.main.Workspace;
+import com.randy.launcher.util.helper.FirstFrameAnimatorHelper;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -151,7 +174,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Launcher extends Activity
         implements OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
         View.OnTouchListener, PagedView.PageSwitchListener, LauncherProviderChangeListener {
-    static final String TAG = "Launcher";
+    public static final String TAG = "Launcher";
     static final boolean LOGD = false;
 
     static final boolean PROFILE_STARTUP = false;
@@ -184,7 +207,7 @@ public class Launcher extends Activity
      */
     protected static final int REQUEST_LAST = 100;
 
-    static final int SCREEN_COUNT = 5;
+    public static final int SCREEN_COUNT = 5;
 
     // To turn on these properties, type
     // adb shell setprop log.tag.PROPERTY_NAME [VERBOSE | SUPPRESS]
@@ -235,7 +258,7 @@ public class Launcher extends Activity
     /**
      * The different states that Launcher can be in.
      */
-    enum State {
+    public enum State {
         /**
          *
          */
@@ -407,6 +430,7 @@ public class Launcher extends Activity
 
     @Thunk
     Runnable mBuildLayersRunnable = new Runnable() {
+        @Override
         public void run() {
             if (mWorkspace != null) {
                 mWorkspace.buildPageHardwareLayers();
@@ -441,6 +465,7 @@ public class Launcher extends Activity
     }
 
     private Runnable mUpdateOrientationRunnable = new Runnable() {
+        @Override
         public void run() {
             setOrientation();
         }
@@ -580,6 +605,7 @@ public class Launcher extends Activity
 
     private LauncherCallbacks mLauncherCallbacks;
 
+    @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         if (mLauncherCallbacks != null) {
@@ -669,10 +695,6 @@ public class Launcher extends Activity
         }
     }
 
-    /**
-     * Invoked by subclasses to signal a change to the {@link #addCustomContentToLeft} value to
-     * ensure the custom content page is added or removed if necessary.
-     */
     protected void invalidateHasCustomContentToLeft() {
         if (mWorkspace == null || mWorkspace.getScreenOrder().isEmpty()) {
             // Not bound yet, wait for bindScreens to be called.
@@ -919,6 +941,7 @@ public class Launcher extends Activity
     /**
      * @Override for MNC
      */
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION_CALL_PHONE && sPendingAddItem != null
@@ -1771,8 +1794,11 @@ public class Launcher extends Activity
                 observer.addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
                     private boolean mStarted = false;
 
+                    @Override
                     public void onDraw() {
-                        if (mStarted) return;
+                        if (mStarted) {
+                            return;
+                        }
                         mStarted = true;
                         // We delay the layer building a bit in order to give
                         // other message processing a time to run.  In particular
@@ -1782,6 +1808,7 @@ public class Launcher extends Activity
                         mWorkspace.postDelayed(mBuildLayersRunnable, 500);
                         final ViewTreeObserver.OnDrawListener listener = this;
                         mWorkspace.post(new Runnable() {
+                            @Override
                             public void run() {
                                 if (mWorkspace != null &&
                                         mWorkspace.getViewTreeObserver() != null) {
@@ -1837,6 +1864,7 @@ public class Launcher extends Activity
                     final int delay = mAdvanceStagger * i;
                     if (v instanceof Advanceable) {
                         mHandler.postDelayed(new Runnable() {
+                            @Override
                             public void run() {
                                 ((Advanceable) v).advance();
                             }
@@ -1851,7 +1879,9 @@ public class Launcher extends Activity
     });
 
     void addWidgetToAutoAdvanceIfNeeded(View hostView, AppWidgetProviderInfo appWidgetInfo) {
-        if (appWidgetInfo == null || appWidgetInfo.autoAdvanceViewId == -1) return;
+        if (appWidgetInfo == null || appWidgetInfo.autoAdvanceViewId == -1) {
+            return;
+        }
         View v = hostView.findViewById(appWidgetInfo.autoAdvanceViewId);
         if (v instanceof Advanceable) {
             mWidgetsToAdvance.put(hostView, appWidgetInfo);
@@ -2436,7 +2466,7 @@ public class Launcher extends Activity
     }
 
     public FolderIcon addFolder(CellLayout layout, long container, final long screenId, int cellX,
-                         int cellY) {
+                                int cellY) {
         final FolderInfo folderInfo = new FolderInfo();
         folderInfo.title = getText(R.string.folder_name);
 
@@ -2534,6 +2564,7 @@ public class Launcher extends Activity
      *
      * @param v The view representing the clicked shortcut.
      */
+    @Override
     public void onClick(View v) {
         // Make sure that rogue clicks don't get through while allapps is launching, or after the
         // view has detached (it's possible for this to happen if the view is removed mid touch).
@@ -2576,6 +2607,7 @@ public class Launcher extends Activity
         }
     }
 
+    @Override
     @SuppressLint("ClickableViewAccessibility")
     public boolean onTouch(View v, MotionEvent event) {
         return false;
@@ -2608,6 +2640,7 @@ public class Launcher extends Activity
             final String packageName = info.providerName.getPackageName();
             showBrokenAppInstallDialog(packageName,
                     new DialogInterface.OnClickListener() {
+                        @Override
                         public void onClick(DialogInterface dialog, int id) {
                             startActivitySafely(v, LauncherModel.getMarketIntent(packageName), info);
                         }
@@ -2626,7 +2659,9 @@ public class Launcher extends Activity
      * @param v The view that was clicked.
      */
     protected void onClickAllAppsButton(View v) {
-        if (LOGD) Log.d(TAG, "onClickAllAppsButton");
+        if (LOGD) {
+            Log.d(TAG, "onClickAllAppsButton");
+        }
         if (!isAppsViewVisible()) {
             showAppsView(true /* animated */, false /* resetListToTop */,
                     true /* updatePredictedApps */, false /* focusSearchBar */);
@@ -2638,7 +2673,9 @@ public class Launcher extends Activity
     }
 
     protected void onLongClickAllAppsButton(View v) {
-        if (LOGD) Log.d(TAG, "onLongClickAllAppsButton");
+        if (LOGD) {
+            Log.d(TAG, "onLongClickAllAppsButton");
+        }
         if (!isAppsViewVisible()) {
             showAppsView(true /* animated */, false /* resetListToTop */,
                     true /* updatePredictedApps */, true /* focusSearchBar */);
@@ -2653,6 +2690,7 @@ public class Launcher extends Activity
                 .setPositiveButton(R.string.abandoned_search, onSearchClickListener)
                 .setNeutralButton(R.string.abandoned_clean_this,
                         new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 final UserHandleCompat user = UserHandleCompat.myUserHandle();
                                 mWorkspace.removeAbandonedPromise(packageName, user);
@@ -2668,7 +2706,9 @@ public class Launcher extends Activity
      * @param v The view that was clicked. Must be a tagged with a {@link ShortcutInfo}.
      */
     protected void onClickAppShortcut(final View v) {
-        if (LOGD) Log.d(TAG, "onClickAppShortcut");
+        if (LOGD) {
+            Log.d(TAG, "onClickAppShortcut");
+        }
         Object tag = v.getTag();
         if (!(tag instanceof ShortcutInfo)) {
             throw new IllegalArgumentException("Input must be a Shortcut");
@@ -2708,6 +2748,7 @@ public class Launcher extends Activity
             showBrokenAppInstallDialog(
                     shortcut.getTargetComponent().getPackageName(),
                     new DialogInterface.OnClickListener() {
+                        @Override
                         public void onClick(DialogInterface dialog, int id) {
                             startAppShortcutOrInfoActivity(v);
                         }
@@ -2758,7 +2799,9 @@ public class Launcher extends Activity
      * @param v The view that was clicked. Must be an instance of {@link FolderIcon}.
      */
     protected void onClickFolderIcon(View v) {
-        if (LOGD) Log.d(TAG, "onClickFolder");
+        if (LOGD) {
+            Log.d(TAG, "onClickFolder");
+        }
         if (!(v instanceof FolderIcon)) {
             throw new IllegalArgumentException("Input must be a FolderIcon");
         }
@@ -2807,7 +2850,9 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickAddWidgetButton(View view) {
-        if (LOGD) Log.d(TAG, "onClickAddWidgetButton");
+        if (LOGD) {
+            Log.d(TAG, "onClickAddWidgetButton");
+        }
         if (mIsSafeModeEnabled) {
             Toast.makeText(this, R.string.safemode_widget_error, Toast.LENGTH_SHORT).show();
         } else {
@@ -2823,7 +2868,9 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickWallpaperPicker(View v) {
-        if (LOGD) Log.d(TAG, "onClickWallpaperPicker");
+        if (LOGD) {
+            Log.d(TAG, "onClickWallpaperPicker");
+        }
         startActivityForResult(new Intent(Intent.ACTION_SET_WALLPAPER).setPackage(getPackageName()),
                 REQUEST_PICK_WALLPAPER);
 
@@ -2837,7 +2884,9 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickSettingsButton(View v) {
-        if (LOGD) Log.d(TAG, "onClickSettingsButton");
+        if (LOGD) {
+            Log.d(TAG, "onClickSettingsButton");
+        }
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onClickSettingsButton(v);
         } else {
@@ -3519,7 +3568,9 @@ public class Launcher extends Activity
 
     public void exitSpringLoadedDragModeDelayed(final boolean successfulDrop, int delay,
                                                 final Runnable onCompleteRunnable) {
-        if (mState != State.APPS_SPRING_LOADED && mState != State.WIDGETS_SPRING_LOADED) return;
+        if (mState != State.APPS_SPRING_LOADED && mState != State.WIDGETS_SPRING_LOADED) {
+            return;
+        }
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -3684,7 +3735,9 @@ public class Launcher extends Activity
     @Thunk
     boolean waitUntilResume(Runnable run, boolean deletePreviousRunnables) {
         if (mPaused) {
-            if (LOGD) Log.d(TAG, "Deferring update until onResume");
+            if (LOGD) {
+                Log.d(TAG, "Deferring update until onResume");
+            }
             if (deletePreviousRunnables) {
                 while (mBindOnResumeCallbacks.remove(run)) {
                 }
@@ -3718,9 +3771,12 @@ public class Launcher extends Activity
      * @return true if we are currently paused.  The caller might be able to
      * skip some work in that case since we will come back again.
      */
+    @Override
     public boolean setLoadOnResume() {
         if (mPaused) {
-            if (LOGD) Log.d(TAG, "setLoadOnResume");
+            if (LOGD) {
+                Log.d(TAG, "setLoadOnResume");
+            }
             mOnResumeNeedsLoad = true;
             return true;
         } else {
@@ -3731,6 +3787,7 @@ public class Launcher extends Activity
     /**
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public int getCurrentWorkspaceScreen() {
         if (mWorkspace != null) {
             return mWorkspace.getCurrentPage();
@@ -3812,11 +3869,13 @@ public class Launcher extends Activity
         }
     }
 
+    @Override
     public void bindAppsAdded(final ArrayList<Long> newScreens,
                               final ArrayList<ItemInfo> addNotAnimated,
                               final ArrayList<ItemInfo> addAnimated,
                               final ArrayList<AppInfo> addedApps) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindAppsAdded(newScreens, addNotAnimated, addAnimated, addedApps);
             }
@@ -3854,9 +3913,11 @@ public class Launcher extends Activity
      * <p>
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void bindItems(final ArrayList<ItemInfo> shortcuts, final int start, final int end,
                           final boolean forceAnimateIcons) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindItems(shortcuts, start, end, forceAnimateIcons);
             }
@@ -3932,6 +3993,7 @@ public class Launcher extends Activity
                 long currentScreenId = mWorkspace.getScreenIdForPageIndex(mWorkspace.getNextPage());
                 final int newScreenIndex = mWorkspace.getPageIndexForScreenId(newShortcutsScreenId);
                 final Runnable startBounceAnimRunnable = new Runnable() {
+                    @Override
                     public void run() {
                         anim.playTogether(bounceAnims);
                         anim.start();
@@ -3941,6 +4003,7 @@ public class Launcher extends Activity
                     // We post the animation slightly delayed to prevent slowdowns
                     // when we are loading right after we return to launcher.
                     mWorkspace.postDelayed(new Runnable() {
+                        @Override
                         public void run() {
                             if (mWorkspace != null) {
                                 mWorkspace.snapToPage(newScreenIndex);
@@ -3960,8 +4023,10 @@ public class Launcher extends Activity
     /**
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void bindFolders(final LongArrayMap<FolderInfo> folders) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindFolders(folders);
             }
@@ -3977,8 +4042,10 @@ public class Launcher extends Activity
      * <p>
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void bindAppWidget(final LauncherAppWidgetInfo item) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindAppWidget(item);
             }
@@ -4112,6 +4179,7 @@ public class Launcher extends Activity
         LauncherModel.updateItemInDatabase(this, info);
     }
 
+    @Override
     public void onPageBoundSynchronously(int page) {
         mSynchronouslyBoundPages.add(page);
     }
@@ -4121,8 +4189,10 @@ public class Launcher extends Activity
      * <p>
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void finishBindingItems() {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 finishBindingItems();
             }
@@ -4178,6 +4248,7 @@ public class Launcher extends Activity
         }
     }
 
+    @Override
     public boolean isAllAppsButtonRank(int rank) {
         if (mHotSeat != null) {
             return mHotSeat.isAllAppsButtonRank(rank);
@@ -4210,6 +4281,7 @@ public class Launcher extends Activity
         return mDeviceProfile.getSearchBarBounds(Utilities.isRtl(getResources()));
     }
 
+    @Override
     public void bindSearchProviderChanged() {
         if (mSearchDropTargetBar == null) {
             return;
@@ -4228,6 +4300,7 @@ public class Launcher extends Activity
     @Thunk
     ArrayList<AppInfo> mTmpAppsList;
     private Runnable mBindAllApplicationsRunnable = new Runnable() {
+        @Override
         public void run() {
             bindAllApplications(mTmpAppsList);
             mTmpAppsList = null;
@@ -4239,6 +4312,7 @@ public class Launcher extends Activity
      * <p>
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void bindAllApplications(final ArrayList<AppInfo> apps) {
         if (waitUntilResume(mBindAllApplicationsRunnable, true)) {
             mTmpAppsList = apps;
@@ -4258,8 +4332,10 @@ public class Launcher extends Activity
      * <p>
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void bindAppsUpdated(final ArrayList<AppInfo> apps) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindAppsUpdated(apps);
             }
@@ -4276,6 +4352,7 @@ public class Launcher extends Activity
     @Override
     public void bindWidgetsRestored(final ArrayList<LauncherAppWidgetInfo> widgets) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindWidgetsRestored(widgets);
             }
@@ -4295,6 +4372,7 @@ public class Launcher extends Activity
     public void bindShortcutsChanged(final ArrayList<ShortcutInfo> updated,
                                      final ArrayList<ShortcutInfo> removed, final UserHandleCompat user) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindShortcutsChanged(updated, removed, user);
             }
@@ -4326,6 +4404,7 @@ public class Launcher extends Activity
     @Override
     public void bindRestoreItemsChange(final HashSet<ItemInfo> updates) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindRestoreItemsChange(updates);
             }
@@ -4351,6 +4430,7 @@ public class Launcher extends Activity
     public void bindComponentsRemoved(final ArrayList<String> packageNames,
                                       final ArrayList<AppInfo> appInfos, final UserHandleCompat user, final int reason) {
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 bindComponentsRemoved(packageNames, appInfos, user, reason);
             }
@@ -4384,6 +4464,7 @@ public class Launcher extends Activity
     }
 
     private Runnable mBindPackagesUpdatedRunnable = new Runnable() {
+        @Override
         public void run() {
             bindAllPackages(mWidgetsModel);
         }
@@ -4452,6 +4533,7 @@ public class Launcher extends Activity
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             } else {
                 mHandler.postDelayed(new Runnable() {
+                    @Override
                     public void run() {
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                     }
@@ -4460,7 +4542,7 @@ public class Launcher extends Activity
         }
     }
 
-    protected boolean isLauncherPreinstalled() {
+    public boolean isLauncherPreinstalled() {
         if (mLauncherCallbacks != null) {
             return mLauncherCallbacks.isLauncherPreinstalled();
         }
@@ -4623,19 +4705,35 @@ public class Launcher extends Activity
     }
 
     void showWorkspaceSearchAndHotseat() {
-        if (mWorkspace != null) mWorkspace.setAlpha(1f);
-        if (mHotSeat != null) mHotSeat.setAlpha(1f);
-        if (mPageIndicators != null) mPageIndicators.setAlpha(1f);
-        if (mSearchDropTargetBar != null) mSearchDropTargetBar.animateToState(
-                SearchDropTargetBar.State.SEARCH_BAR, 0);
+        if (mWorkspace != null) {
+            mWorkspace.setAlpha(1f);
+        }
+        if (mHotSeat != null) {
+            mHotSeat.setAlpha(1f);
+        }
+        if (mPageIndicators != null) {
+            mPageIndicators.setAlpha(1f);
+        }
+        if (mSearchDropTargetBar != null) {
+            mSearchDropTargetBar.animateToState(
+                    SearchDropTargetBar.State.SEARCH_BAR, 0);
+        }
     }
 
     void hideWorkspaceSearchAndHotseat() {
-        if (mWorkspace != null) mWorkspace.setAlpha(0f);
-        if (mHotSeat != null) mHotSeat.setAlpha(0f);
-        if (mPageIndicators != null) mPageIndicators.setAlpha(0f);
-        if (mSearchDropTargetBar != null) mSearchDropTargetBar.animateToState(
-                SearchDropTargetBar.State.INVISIBLE, 0);
+        if (mWorkspace != null) {
+            mWorkspace.setAlpha(0f);
+        }
+        if (mHotSeat != null) {
+            mHotSeat.setAlpha(0f);
+        }
+        if (mPageIndicators != null) {
+            mPageIndicators.setAlpha(0f);
+        }
+        if (mSearchDropTargetBar != null) {
+            mSearchDropTargetBar.animateToState(
+                    SearchDropTargetBar.State.INVISIBLE, 0);
+        }
     }
 
     // TODO: These method should be a part of LauncherSearchCallback

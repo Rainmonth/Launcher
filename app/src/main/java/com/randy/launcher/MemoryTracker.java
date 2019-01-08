@@ -222,7 +222,7 @@ public class MemoryTracker extends Service {
     }
 
     public class MemoryTrackerInterface extends Binder {
-        MemoryTracker getService() {
+        public MemoryTracker getService() {
             return MemoryTracker.this;
         }
     }

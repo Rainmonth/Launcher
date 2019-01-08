@@ -14,7 +14,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.randy.launcher.SearchDropTargetBar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randy.launcher.ui.view.main.SearchDropTargetBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="false" >
@@ -64,4 +64,4 @@
         </FrameLayout>
     </LinearLayout>
 
-</com.randy.launcher.SearchDropTargetBar>
+</com.randy.launcher.ui.view.main.SearchDropTargetBar>

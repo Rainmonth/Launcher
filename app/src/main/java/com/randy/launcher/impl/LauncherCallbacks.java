@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-import com.randy.launcher.widget.base.InsettableFrameLayout;
+import com.randy.launcher.ui.view.base.InsettableFrameLayout;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.allapps.AllAppsSearchBarController;
 import com.randy.launcher.beans.AppInfo;

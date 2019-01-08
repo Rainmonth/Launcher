@@ -24,18 +24,18 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
-import com.randy.launcher.DragLayer;
-import com.randy.launcher.widget.Folder;
+import com.randy.launcher.ui.view.DragLayer;
+import com.randy.launcher.ui.Folder;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppWidgetHost;
-import com.randy.launcher.LauncherAppWidgetInfo;
-import com.randy.launcher.LauncherModel;
+import com.randy.launcher.ui.widget.LauncherAppWidgetHost;
+import com.randy.launcher.beans.LauncherAppWidgetInfo;
+import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.R;
-import com.randy.launcher.widget.main.Workspace;
+import com.randy.launcher.ui.view.main.Workspace;
 import com.randy.launcher.beans.FolderInfo;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.beans.ShortcutInfo;
-import com.randy.launcher.util.FlingAnimation;
+import com.randy.launcher.ui.animator.FlingAnimation;
 import com.randy.launcher.util.Thunk;
 
 public class DeleteDropTarget extends ButtonDropTarget {

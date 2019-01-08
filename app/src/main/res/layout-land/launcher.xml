@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Full screen view projects under the status bar and contains the background -->
-<com.randy.launcher.widget.base.LauncherRootView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randy.launcher.ui.view.base.LauncherRootView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:launcher="http://schemas.android.com/apk/res-auto"
     android:id="@+id/launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.randy.launcher.DragLayer
+    <com.randy.launcher.ui.view.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.randy.launcher.FocusIndicatorView
+        <com.randy.launcher.ui.view.main.FocusIndicatorView
             android:id="@+id/focus_indicator"
             android:layout_width="52dp"
             android:layout_height="52dp" />
 
         <!-- The workspace contains 5 screens of cells -->
         <!-- DO NOT CHANGE THE ID -->
-        <com.randy.launcher.widget.main.Workspace
+        <com.randy.launcher.ui.view.main.Workspace
             android:id="@+id/workspace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible" />
-    </com.randy.launcher.DragLayer>
+    </com.randy.launcher.ui.view.DragLayer>
 
     <ViewStub
         android:id="@+id/launcher_overlay_stub"
@@ -65,4 +65,4 @@
         android:layout_height="match_parent"
         android:inflatedId="@+id/launcher_overlay"
         android:layout="@layout/launcher_overlay" />
-</com.randy.launcher.widget.base.LauncherRootView>
+</com.randy.launcher.ui.view.base.LauncherRootView>

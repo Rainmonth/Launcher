@@ -30,7 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.Thunk;
 
 import java.util.ArrayList;

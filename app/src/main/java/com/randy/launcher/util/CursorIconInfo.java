@@ -22,9 +22,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 
-import com.randy.launcher.LauncherSettings;
+import com.randy.launcher.config.LauncherSettings;
 import com.randy.launcher.beans.ShortcutInfo;
-import com.randy.launcher.Utilities;
 
 /**
  * Utility class to load icon from a cursor.
@@ -46,24 +45,26 @@ public class CursorIconInfo {
         Bitmap icon = null;
         int iconType = c.getInt(iconTypeIndex);
         switch (iconType) {
-        case LauncherSettings.Favorites.ICON_TYPE_RESOURCE:
-            String packageName = c.getString(iconPackageIndex);
-            String resourceName = c.getString(iconResourceIndex);
-            if (!TextUtils.isEmpty(packageName) || !TextUtils.isEmpty(resourceName)) {
-                info.iconResource = new ShortcutIconResource();
-                info.iconResource.packageName = packageName;
-                info.iconResource.resourceName = resourceName;
-                icon = Utilities.createIconBitmap(packageName, resourceName, context);
-            }
-            if (icon == null) {
-                // Failed to load from resource, try loading from DB.
+            case LauncherSettings.Favorites.ICON_TYPE_RESOURCE:
+                String packageName = c.getString(iconPackageIndex);
+                String resourceName = c.getString(iconResourceIndex);
+                if (!TextUtils.isEmpty(packageName) || !TextUtils.isEmpty(resourceName)) {
+                    info.iconResource = new ShortcutIconResource();
+                    info.iconResource.packageName = packageName;
+                    info.iconResource.resourceName = resourceName;
+                    icon = Utilities.createIconBitmap(packageName, resourceName, context);
+                }
+                if (icon == null) {
+                    // Failed to load from resource, try loading from DB.
+                    icon = Utilities.createIconBitmap(c, iconIndex, context);
+                }
+                break;
+            case LauncherSettings.Favorites.ICON_TYPE_BITMAP:
                 icon = Utilities.createIconBitmap(c, iconIndex, context);
-            }
-            break;
-        case LauncherSettings.Favorites.ICON_TYPE_BITMAP:
-            icon = Utilities.createIconBitmap(c, iconIndex, context);
-            info.customIcon = icon != null;
-            break;
+                info.customIcon = icon != null;
+                break;
+            default:
+                break;
         }
         return icon;
     }

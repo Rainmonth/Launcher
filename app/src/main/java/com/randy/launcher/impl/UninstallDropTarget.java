@@ -11,16 +11,14 @@ import android.util.Pair;
 
 
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherSettings;
+import com.randy.launcher.config.LauncherSettings;
 import com.randy.launcher.R;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.beans.AllAppsList;
 import com.randy.launcher.beans.AppInfo;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.compat.UserHandleCompat;
-import com.randy.launcher.impl.ButtonDropTarget;
-import com.randy.launcher.impl.DragSource;
 import com.randy.launcher.util.Thunk;
 
 public class UninstallDropTarget extends ButtonDropTarget {

@@ -18,7 +18,7 @@ package com.randy.launcher.compat;
 
 import android.content.Context;
 
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 
 import java.util.HashMap;
 

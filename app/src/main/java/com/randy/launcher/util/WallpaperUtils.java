@@ -24,8 +24,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.view.WindowManager;
 
-import com.randy.launcher.Utilities;
-
 /**
  * Utility methods for wallpaper management.
  */

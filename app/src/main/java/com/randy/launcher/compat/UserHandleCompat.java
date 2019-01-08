@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.UserHandle;
 
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 
 public class UserHandleCompat {
     private UserHandle mUser;

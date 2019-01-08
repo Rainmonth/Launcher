@@ -35,19 +35,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.randy.launcher.beans.AppInfo;
-import com.randy.launcher.widget.base.BaseContainerView;
-import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.ui.view.base.BaseContainerView;
+import com.randy.launcher.ui.view.main.CellLayout;
 import com.randy.launcher.impl.DeleteDropTarget;
-import com.randy.launcher.DeviceProfile;
+import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.impl.DragSource;
 import com.randy.launcher.impl.DropTarget;
-import com.randy.launcher.widget.Folder;
+import com.randy.launcher.ui.Folder;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.impl.LauncherTransitionable;
 import com.randy.launcher.R;
-import com.randy.launcher.Utilities;
-import com.randy.launcher.widget.main.Workspace;
+import com.randy.launcher.util.Utilities;
+import com.randy.launcher.ui.view.main.Workspace;
 import com.randy.launcher.util.ComponentKey;
 import com.randy.launcher.util.Thunk;
 

@@ -26,9 +26,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.randy.launcher.ExtendedEditText;
+import com.randy.launcher.ui.view.main.ExtendedEditText;
 import com.randy.launcher.R;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.Thunk;
 
 import java.util.List;

@@ -26,7 +26,7 @@
 
     <!-- Section info -->
 
-    <com.randy.launcher.widget.BubbleTextView
+    <com.randy.launcher.ui.BubbleTextView
         android:id="@+id/section"
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_section_height"

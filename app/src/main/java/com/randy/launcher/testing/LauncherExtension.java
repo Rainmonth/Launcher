@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.randy.launcher.beans.AppInfo;
-import com.randy.launcher.widget.base.InsettableFrameLayout;
+import com.randy.launcher.ui.view.base.InsettableFrameLayout;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAnimUtils;
+import com.randy.launcher.util.LauncherAnimUtils;
 import com.randy.launcher.impl.LauncherCallbacks;
 import com.randy.launcher.R;
 import com.randy.launcher.allapps.AllAppsSearchBarController;

@@ -19,7 +19,7 @@ package com.randy.launcher.impl;
 import android.graphics.PointF;
 import android.graphics.Rect;
 
-import com.randy.launcher.widget.main.DragView;
+import com.randy.launcher.ui.view.main.DragView;
 
 /**
  * Interface defining an object that can receive a drag.

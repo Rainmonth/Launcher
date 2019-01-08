@@ -21,10 +21,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
-import com.randy.launcher.LauncherModel;
-import com.randy.launcher.LauncherSettings;
-import com.randy.launcher.Utilities;
-import com.randy.launcher.widget.main.Workspace;
+import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.config.LauncherSettings;
+import com.randy.launcher.util.Utilities;
+import com.randy.launcher.ui.view.main.Workspace;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
 

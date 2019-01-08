@@ -19,8 +19,8 @@ package com.randy.launcher.beans;
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.randy.launcher.LauncherModel;
-import com.randy.launcher.LauncherSettings;
+import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.config.LauncherSettings;
 import com.randy.launcher.compat.UserHandleCompat;
 
 import java.util.ArrayList;

@@ -49,9 +49,13 @@ import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
 import com.randy.launcher.beans.PackageItemInfo;
+import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.config.LauncherFiles;
 import com.randy.launcher.util.ComponentKey;
+import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.util.Thunk;
-import com.randy.launcher.widget.BubbleTextView;
+import com.randy.launcher.util.Utilities;
+import com.randy.launcher.ui.BubbleTextView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -805,6 +809,9 @@ public class IconCache {
         mSystemState = Locale.getDefault().toString();
     }
 
+    /**
+     * App信息数据库
+     */
     private static final class IconDB extends SQLiteOpenHelper {
         private final static int DB_VERSION = 7;
 

@@ -26,8 +26,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.randy.launcher.IconCache;
-import com.randy.launcher.LauncherAppWidgetProviderInfo;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
+import com.randy.launcher.util.Utilities;
 
 import java.util.List;
 

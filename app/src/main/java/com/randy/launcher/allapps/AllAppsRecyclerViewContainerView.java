@@ -21,10 +21,10 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.randy.launcher.widget.BubbleTextView;
-import com.randy.launcher.widget.BubbleTextView.BubbleTextShadowHandler;
-import com.randy.launcher.ClickShadowView;
-import com.randy.launcher.DeviceProfile;
+import com.randy.launcher.ui.BubbleTextView;
+import com.randy.launcher.ui.BubbleTextView.BubbleTextShadowHandler;
+import com.randy.launcher.ui.ClickShadowView;
+import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.Launcher;
 
 /**

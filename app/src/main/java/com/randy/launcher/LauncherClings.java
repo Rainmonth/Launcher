@@ -35,10 +35,20 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.accessibility.AccessibilityManager;
 
+import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.ui.animator.LogDecelerateInterpolator;
+import com.randy.launcher.util.LauncherAnimUtils;
 import com.randy.launcher.util.Thunk;
-import com.randy.launcher.widget.main.PagedView;
+import com.randy.launcher.util.Utilities;
+import com.randy.launcher.ui.BorderCropDrawable;
+import com.randy.launcher.ui.view.main.PagedView;
 
-class LauncherClings implements OnClickListener {
+/**
+ * Launcher 启动引导
+ *
+ * @author randy
+ */
+public class LauncherClings implements OnClickListener {
     private static final String MIGRATION_CLING_DISMISSED_KEY = "cling_gel.migration.dismissed";
     private static final String WORKSPACE_CLING_DISMISSED_KEY = "cling_gel.workspace.dismissed";
 
@@ -50,11 +60,15 @@ class LauncherClings implements OnClickListener {
     // New Secure Setting in L
     private static final String SKIP_FIRST_USE_HINTS = "skip_first_use_hints";
 
-    @Thunk Launcher mLauncher;
+    @Thunk
+    Launcher mLauncher;
     private LayoutInflater mInflater;
-    @Thunk boolean mIsVisible;
+    @Thunk
+    boolean mIsVisible;
 
-    /** Ctor */
+    /**
+     * Ctor
+     */
     public LauncherClings(Launcher launcher) {
         mLauncher = launcher;
         mInflater = LayoutInflater.from(mLauncher);
@@ -87,10 +101,7 @@ class LauncherClings implements OnClickListener {
     }
 
     /**
-     * Shows the migration cling.
-     *
-     * This flow is mutually exclusive with showFirstRunCling, and only runs if this Launcher
-     * package was not preinstalled and there exists a db to migrate from.
+     * 展示应用迁移引导（展示条件：Launcher尚未安装，但之前存在Launcher相关的数据库
      */
     public void showMigrationCling() {
         mIsVisible = true;
@@ -102,11 +113,16 @@ class LauncherClings implements OnClickListener {
         inflated.findViewById(R.id.cling_dismiss_migration_use_default).setOnClickListener(this);
     }
 
+    /**
+     * 隐藏迁移引导
+     */
     private void dismissMigrationCling() {
         mLauncher.showWorkspaceSearchAndHotseat();
         Runnable dismissCb = new Runnable() {
+            @Override
             public void run() {
                 Runnable cb = new Runnable() {
+                    @Override
                     public void run() {
                         // Show the longpress cling next
                         showLongPressCling(false);
@@ -119,6 +135,11 @@ class LauncherClings implements OnClickListener {
         mLauncher.getWorkspace().post(dismissCb);
     }
 
+    /**
+     * 展示长按引导
+     *
+     * @param showWelcome 是否显示Welcome
+     */
     public void showLongPressCling(boolean showWelcome) {
         mIsVisible = true;
         ViewGroup root = (ViewGroup) mLauncher.findViewById(R.id.launcher);
@@ -178,8 +199,13 @@ class LauncherClings implements OnClickListener {
         });
     }
 
-    @Thunk void dismissLongPressCling() {
+    /**
+     * 隐藏长按引导
+     */
+    @Thunk
+    void dismissLongPressCling() {
         Runnable dismissCb = new Runnable() {
+            @Override
             public void run() {
                 dismissCling(mLauncher.findViewById(R.id.longpress_cling), null,
                         WORKSPACE_CLING_DISMISSED_KEY, DISMISS_CLING_DURATION);
@@ -188,18 +214,22 @@ class LauncherClings implements OnClickListener {
         mLauncher.getWorkspace().post(dismissCb);
     }
 
-    /** Hides the specified Cling */
-    @Thunk void dismissCling(final View cling, final Runnable postAnimationCb,
-                              final String flag, int duration) {
+    /**
+     * 隐藏制定的引导
+     */
+    @Thunk
+    void dismissCling(final View cling, final Runnable postAnimationCb,
+                      final String flag, int duration) {
         // To catch cases where siblings of top-level views are made invisible, just check whether
         // the cling is directly set to GONE before dismissing it.
         if (cling != null && cling.getVisibility() != View.GONE) {
             final Runnable cleanUpClingCb = new Runnable() {
+                @Override
                 public void run() {
                     cling.setVisibility(View.GONE);
                     mLauncher.getSharedPrefs().edit()
-                        .putBoolean(flag, true)
-                        .apply();
+                            .putBoolean(flag, true)
+                            .apply();
                     mIsVisible = false;
                     if (postAnimationCb != null) {
                         postAnimationCb.run();
@@ -218,11 +248,15 @@ class LauncherClings implements OnClickListener {
         return mIsVisible;
     }
 
-    /** Returns whether the clings are enabled or should be shown */
+    /**
+     * 引导是否被启用或者是否应该显示引导
+     */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private boolean areClingsEnabled() {
         // disable clings when running in a test harness
-        if(ActivityManager.isRunningInTestHarness()) return false;
+        if (ActivityManager.isRunningInTestHarness()) {
+            return false;
+        }
 
         // Disable clings for accessibility when explore by touch is enabled
         final AccessibilityManager a11yManager = (AccessibilityManager) mLauncher.getSystemService(
@@ -247,14 +281,24 @@ class LauncherClings implements OnClickListener {
         return true;
     }
 
+    /**
+     * 是否要显示首次运行和迁移引导
+     *
+     * @return True if is show first run or migration
+     */
     public boolean shouldShowFirstRunOrMigrationClings() {
         SharedPreferences sharedPrefs = mLauncher.getSharedPrefs();
         return areClingsEnabled() &&
-            !sharedPrefs.getBoolean(WORKSPACE_CLING_DISMISSED_KEY, false) &&
-            !sharedPrefs.getBoolean(MIGRATION_CLING_DISMISSED_KEY, false);
+                !sharedPrefs.getBoolean(WORKSPACE_CLING_DISMISSED_KEY, false) &&
+                !sharedPrefs.getBoolean(MIGRATION_CLING_DISMISSED_KEY, false);
     }
 
-    public static void synchonouslyMarkFirstRunClingDismissed(Context ctx) {
+    /**
+     * 同步的更改首次运行隐藏标记
+     *
+     * @param ctx
+     */
+    public static void synchronouslyMarkFirstRunClingDismissed(Context ctx) {
         SharedPreferences prefs = ctx.getSharedPreferences(
                 LauncherAppState.getSharedPreferencesKey(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();

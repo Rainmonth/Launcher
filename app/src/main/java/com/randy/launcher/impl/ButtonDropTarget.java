@@ -37,15 +37,15 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
-import com.randy.launcher.DeviceProfile;
-import com.randy.launcher.DragController;
-import com.randy.launcher.DragLayer;
-import com.randy.launcher.widget.main.DragView;
+import com.randy.launcher.util.DeviceProfile;
+import com.randy.launcher.ui.view.DragController;
+import com.randy.launcher.ui.view.DragLayer;
+import com.randy.launcher.ui.view.main.DragView;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.R;
-import com.randy.launcher.SearchDropTargetBar;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.ui.view.main.SearchDropTargetBar;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.Thunk;
 
 /**

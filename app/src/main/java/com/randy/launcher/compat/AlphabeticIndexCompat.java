@@ -2,7 +2,7 @@ package com.randy.launcher.compat;
 
 import android.content.Context;
 
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

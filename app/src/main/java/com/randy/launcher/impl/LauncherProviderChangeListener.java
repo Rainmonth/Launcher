@@ -1,6 +1,6 @@
 package com.randy.launcher.impl;
 
-import com.randy.launcher.LauncherProvider;
+import com.randy.launcher.components.provider.LauncherProvider;
 
 /**
  * This class is a listener for {@link LauncherProvider} changes. It gets notified in the

@@ -102,7 +102,8 @@ public class Stats {
 
     public static final String CONTAINER_SEARCH_BOX = "search_box";
     public static final String CONTAINER_ALL_APPS = "all_apps";
-    public static final String CONTAINER_HOMESCREEN = "homescreen"; // aka. Workspace
+    // aka. Workspace
+    public static final String CONTAINER_HOMESCREEN = "homescreen";
     public static final String CONTAINER_HOTSEAT = "hotseat";
 
     public static final String SUB_CONTAINER_FOLDER = "folder";

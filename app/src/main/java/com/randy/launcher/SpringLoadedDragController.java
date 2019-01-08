@@ -17,8 +17,8 @@
 package com.randy.launcher;
 
 import com.randy.launcher.impl.OnAlarmListener;
-import com.randy.launcher.widget.main.CellLayout;
-import com.randy.launcher.widget.main.Workspace;
+import com.randy.launcher.ui.view.main.CellLayout;
+import com.randy.launcher.ui.view.main.Workspace;
 
 public class SpringLoadedDragController implements OnAlarmListener {
     // how long the user must hover over a mini-screen before it unshrinks

@@ -20,7 +20,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.randy.launcher.beans.AppInfo;
-import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.ui.view.main.CellLayout;
 import com.randy.launcher.beans.FolderInfo;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.R;

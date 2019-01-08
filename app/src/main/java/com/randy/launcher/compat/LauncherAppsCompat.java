@@ -25,7 +25,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Rect;
 import android.os.Bundle;
 
-import com.randy.launcher.Utilities;
+import com.randy.launcher.util.Utilities;
 
 import java.util.List;
 

@@ -23,8 +23,8 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.randy.launcher.IconCache;
-import com.randy.launcher.LauncherSettings;
-import com.randy.launcher.Utilities;
+import com.randy.launcher.config.LauncherSettings;
+import com.randy.launcher.util.Utilities;
 import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;

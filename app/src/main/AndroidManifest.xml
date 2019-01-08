@@ -106,7 +106,7 @@
         </activity>
 
         <activity
-            android:name="com.randy.launcher.WallpaperPickerActivity"
+            android:name="com.randy.launcher.components.activity.WallpaperPickerActivity"
             android:theme="@style/Theme.WallpaperPicker"
             android:label="@string/pick_wallpaper"
             android:icon="@mipmap/ic_launcher_wallpaper"
@@ -119,7 +119,7 @@
         </activity>
 
         <activity
-            android:name="com.randy.launcher.WallpaperCropActivity"
+            android:name="com.randy.launcher.components.activity.WallpaperCropActivity"
             android:theme="@style/Theme.WallpaperCropper"
             android:label="@string/crop_wallpaper"
             android:icon="@mipmap/ic_launcher_wallpaper"
@@ -133,7 +133,7 @@
         </activity>
 
         <activity
-            android:name="com.randy.launcher.SettingsActivity"
+            android:name="com.randy.launcher.components.activity.SettingsActivity"
             android:label="@string/settings_button_text"
             android:autoRemoveFromRecents="true"
             android:process=":settings_process">
@@ -141,7 +141,7 @@
 
         <!-- Debugging tools -->
         <activity
-            android:name="com.randy.launcher.MemoryDumpActivity"
+            android:name="com.randy.launcher.components.activity.MemoryDumpActivity"
             android:theme="@android:style/Theme.NoDisplay"
             android:label="@string/debug_memory_activity"
             android:enabled="@bool/debug_memory_enabled"
@@ -161,7 +161,7 @@
         </service>
 
         <receiver
-            android:name="com.randy.launcher.receiver.WallpaperChangedReceiver">
+            android:name=".components.receiver.WallpaperChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.WALLPAPER_CHANGED" />
             </intent-filter>
@@ -169,7 +169,7 @@
 
         <!-- Intent received used to install shortcuts from other applications -->
         <receiver
-            android:name="com.randy.launcher.InstallShortcutReceiver"
+            android:name="com.randy.launcher.components.receiver.InstallShortcutReceiver"
             android:permission="com.randy.launcher.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.randy.launcher.action.INSTALL_SHORTCUT" />
@@ -177,13 +177,13 @@
         </receiver>
 
         <!-- Intent received used to initialize a restored widget -->
-        <receiver android:name="com.randy.launcher.receiver.AppWidgetsRestoredReceiver" >
+        <receiver android:name=".components.receiver.AppWidgetsRestoredReceiver" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.randy.launcher.receiver.StartupReceiver" >
+        <receiver android:name=".components.receiver.StartupReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -191,7 +191,7 @@
 
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
-            android:name="com.randy.launcher.LauncherProvider"
+            android:name="com.randy.launcher.components.provider.LauncherProvider"
             android:authorities="com.android.launcher3.settings"
             android:exported="true"
             android:writePermission="com.randy.launcher.permission.WRITE_SETTINGS"

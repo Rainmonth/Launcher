@@ -27,7 +27,13 @@ import com.randy.launcher.beans.BuildInfo;
 import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.PackageInstallerCompat;
 import com.randy.launcher.compat.UserManagerCompat;
+import com.randy.launcher.components.provider.LauncherProvider;
+import com.randy.launcher.components.receiver.LauncherModel;
+import com.randy.launcher.config.LauncherFiles;
+import com.randy.launcher.ui.widget.WidgetPreviewLoader;
+import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.util.Utilities;
 
 import java.lang.ref.WeakReference;
 
@@ -148,7 +154,7 @@ public class LauncherAppState {
         return mModel;
     }
 
-    static void setLauncherProvider(LauncherProvider provider) {
+    public static void setLauncherProvider(LauncherProvider provider) {
         sLauncherProvider = new WeakReference<LauncherProvider>(provider);
     }
 

@@ -38,7 +38,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.randy.launcher.IconCache;
-import com.randy.launcher.LauncherAppWidgetProviderInfo;
+import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.R;
 
 import java.util.ArrayList;
