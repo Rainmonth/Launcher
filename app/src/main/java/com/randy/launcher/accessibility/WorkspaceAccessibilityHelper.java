@@ -19,12 +19,12 @@ package com.randy.launcher.accessibility;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.randy.launcher.AppInfo;
-import com.randy.launcher.CellLayout;
-import com.randy.launcher.FolderInfo;
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.beans.FolderInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.R;
-import com.randy.launcher.ShortcutInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.accessibility.LauncherAccessibilityDelegate.DragType;
 
 /**

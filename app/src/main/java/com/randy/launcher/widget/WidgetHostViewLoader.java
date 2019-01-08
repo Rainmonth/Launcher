@@ -8,10 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import com.randy.launcher.AppWidgetResizeFrame;
 import com.randy.launcher.DragController.DragListener;
 import com.randy.launcher.DragLayer;
-import com.randy.launcher.DragSource;
+import com.randy.launcher.impl.DragSource;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.Utilities;

@@ -33,6 +33,8 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.randy.launcher.widget.main.PagedView;
+
 public class DeviceProfile {
 
     public final InvariantDeviceProfile inv;
@@ -281,7 +283,7 @@ public class DeviceProfile {
     }
 
     /** Returns the workspace padding in the specified orientation */
-    Rect getWorkspacePadding(boolean isLayoutRtl) {
+    public Rect getWorkspacePadding(boolean isLayoutRtl) {
         Rect searchBarBounds = getSearchBarBounds(isLayoutRtl);
         Rect padding = new Rect();
         if (isLandscape && transposeLayoutWithOrientation) {
@@ -331,7 +333,7 @@ public class DeviceProfile {
         }
     }
 
-    int getOverviewModeButtonBarHeight() {
+    public int getOverviewModeButtonBarHeight() {
         int zoneHeight = (int) (overviewModeIconZoneRatio * availableHeightPx);
         zoneHeight = Math.min(overviewModeMaxIconZoneHeightPx,
                 Math.max(overviewModeMinIconZoneHeightPx, zoneHeight));
@@ -339,7 +341,7 @@ public class DeviceProfile {
     }
 
     // The rect returned will be extended to below the system ui that covers the workspace
-    Rect getHotseatRect() {
+    public Rect getHotseatRect() {
         if (isVerticalBarLayout()) {
             return new Rect(availableWidthPx - hotseatBarHeightPx, 0,
                     Integer.MAX_VALUE, availableHeightPx);
@@ -360,11 +362,11 @@ public class DeviceProfile {
      * When {@code true}, hotseat is on the bottom row when in landscape mode.
      * If {@code false}, hotseat is on the right column when in landscape mode.
      */
-    boolean isVerticalBarLayout() {
+    public boolean isVerticalBarLayout() {
         return isLandscape && transposeLayoutWithOrientation;
     }
 
-    boolean shouldFadeAdjacentWorkspaceScreens() {
+    public boolean shouldFadeAdjacentWorkspaceScreens() {
         return isVerticalBarLayout() || isLargeTablet;
     }
 

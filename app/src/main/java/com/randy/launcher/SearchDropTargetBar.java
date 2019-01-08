@@ -26,19 +26,28 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 
+import com.randy.launcher.impl.ButtonDropTarget;
+import com.randy.launcher.impl.DragSource;
 import com.randy.launcher.util.Thunk;
 
-/*
+/**
+ * @author randy
+ * <p>
  * Ths bar will manage the transition between the QSB search bar and the delete drop
  * targets so that each of the individual IconDropTargets don't have to.
  */
 public class SearchDropTargetBar extends FrameLayout implements DragController.DragListener {
 
-    /** The different states that the search bar space can be in. */
+    /**
+     * The different states that the search bar space can be in.
+     */
     public enum State {
-        INVISIBLE   (0f, 0f),
-        SEARCH_BAR  (1f, 0f),
-        DROP_TARGET (0f, 1f);
+        /**
+         *
+         */
+        INVISIBLE(0f, 0f),
+        SEARCH_BAR(1f, 0f),
+        DROP_TARGET(0f, 1f);
 
         private final float mSearchBarAlpha;
         private final float mDropTargetBarAlpha;
@@ -65,10 +74,13 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
             new AccelerateInterpolator();
 
     private State mState = State.SEARCH_BAR;
-    @Thunk View mQSB;
-    @Thunk View mDropTargetBar;
+    @Thunk
+    View mQSB;
+    @Thunk
+    View mDropTargetBar;
     private boolean mDeferOnDragEnd = false;
-    @Thunk boolean mAccessibilityEnabled = false;
+    @Thunk
+    boolean mAccessibilityEnabled = false;
 
     // Drop targets
     private ButtonDropTarget mInfoDropTarget;
@@ -185,7 +197,7 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
      * Convenience method to animate the alpha of a view using hardware layers.
      */
     private void animateViewAlpha(LauncherViewPropertyAnimator animator, View v, float alpha,
-            int duration) {
+                                  int duration) {
         if (v == null) {
             return;
         }

@@ -20,6 +20,9 @@ import android.view.View;
 
 import com.randy.launcher.util.Thunk;
 
+/**
+ * @author randy
+ */
 public class CheckLongPressHelper {
 
     @Thunk
@@ -32,6 +35,7 @@ public class CheckLongPressHelper {
     private CheckForLongPress mPendingCheckForLongPress;
 
     class CheckForLongPress implements Runnable {
+        @Override
         public void run() {
             if ((mView.getParent() != null) && mView.hasWindowFocus()
                     && !mHasPerformedLongPress) {

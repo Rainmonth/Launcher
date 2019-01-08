@@ -35,6 +35,8 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
 
+import com.randy.launcher.beans.ItemInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.util.Thunk;
 
 import org.xmlpull.v1.XmlPullParser;

@@ -30,9 +30,11 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.randy.launcher.allapps.AllAppsContainerView;
+import com.randy.launcher.impl.LauncherTransitionable;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.UiThreadCircularReveal;
 import com.randy.launcher.widget.WidgetsContainerView;
+import com.randy.launcher.widget.main.Workspace;
 
 import java.util.HashMap;
 

@@ -40,19 +40,31 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.randy.launcher.accessibility.LauncherAccessibilityDelegate;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.AppWidgetResizeFrame;
+import com.randy.launcher.widget.Folder;
+import com.randy.launcher.widget.FolderIcon;
+import com.randy.launcher.widget.base.InsettableFrameLayout;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.widget.main.DragView;
+import com.randy.launcher.widget.main.Workspace;
 
 import java.util.ArrayList;
 
 /**
  * A ViewGroup that coordinates dragging across its descendants
+ *
+ * @author randy
  */
 public class DragLayer extends InsettableFrameLayout {
 
     public static final int ANIMATION_END_DISAPPEAR = 0;
     public static final int ANIMATION_END_REMAIN_VISIBLE = 2;
 
-    // Scrim color without any alpha component.
+    /**
+     * Scrim color without any alpha component.
+     */
     private static final int SCRIM_COLOR = Color.BLACK & 0x00FFFFFF;
 
     private final int[] mTmpXY = new int[2];
@@ -274,6 +286,8 @@ public class DragLayer extends InsettableFrameLayout {
                             return true;
                         }
                         mHoverPointClosesFolder = false;
+                    default:
+                        break;
                 }
             }
         }
@@ -375,7 +389,9 @@ public class DragLayer extends InsettableFrameLayout {
                     mCurrentResizeFrame = null;
             }
         }
-        if (handled) return true;
+        if (handled) {
+            return true;
+        }
         return mDragController.onTouchEvent(ev);
     }
 
@@ -522,6 +538,7 @@ public class DragLayer extends InsettableFrameLayout {
         }
     }
 
+    @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         int count = getChildCount();
@@ -646,6 +663,7 @@ public class DragLayer extends InsettableFrameLayout {
         final int fromY = r.top;
         child.setVisibility(INVISIBLE);
         Runnable onCompleteRunnable = new Runnable() {
+            @Override
             public void run() {
                 child.setVisibility(VISIBLE);
                 if (onFinishAnimationRunnable != null) {
@@ -766,7 +784,9 @@ public class DragLayer extends InsettableFrameLayout {
                             TimeInterpolator interpolator, final Runnable onCompleteRunnable,
                             final int animationEndStyle, View anchorView) {
         // Clean up the previous animations
-        if (mDropAnim != null) mDropAnim.cancel();
+        if (mDropAnim != null) {
+            mDropAnim.cancel();
+        }
 
         // Show the drop view if it was previously hidden
         mDropView = view;
@@ -786,6 +806,7 @@ public class DragLayer extends InsettableFrameLayout {
         mDropAnim.setFloatValues(0f, 1f);
         mDropAnim.addUpdateListener(updateCb);
         mDropAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
             public void onAnimationEnd(Animator animation) {
                 if (onCompleteRunnable != null) {
                     onCompleteRunnable.run();
@@ -891,7 +912,7 @@ public class DragLayer extends InsettableFrameLayout {
         invalidate();
     }
 
-    void showPageHints() {
+    public void showPageHints() {
         mShowPageHints = true;
         Workspace workspace = mLauncher.getWorkspace();
         getDescendantRectRelativeToSelf(workspace.getChildAt(workspace.numCustomPages()),
@@ -899,7 +920,7 @@ public class DragLayer extends InsettableFrameLayout {
         invalidate();
     }
 
-    void hidePageHints() {
+    public void hidePageHints() {
         mShowPageHints = false;
         invalidate();
     }
@@ -940,6 +961,7 @@ public class DragLayer extends InsettableFrameLayout {
         }
     }
 
+    @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         boolean ret = super.drawChild(canvas, child, drawingTime);
 

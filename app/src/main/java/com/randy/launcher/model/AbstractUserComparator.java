@@ -17,7 +17,7 @@ package com.randy.launcher.model;
 
 import android.content.Context;
 
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
 

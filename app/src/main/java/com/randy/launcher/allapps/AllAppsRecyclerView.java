@@ -25,8 +25,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.randy.launcher.BaseRecyclerView;
-import com.randy.launcher.BaseRecyclerViewFastScrollBar;
+import com.randy.launcher.widget.base.BaseRecyclerView;
+import com.randy.launcher.widget.base.BaseRecyclerViewFastScrollBar;
 import com.randy.launcher.DeviceProfile;
 import com.randy.launcher.R;
 import com.randy.launcher.Stats;

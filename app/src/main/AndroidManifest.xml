@@ -161,7 +161,7 @@
         </service>
 
         <receiver
-            android:name="com.randy.launcher.WallpaperChangedReceiver">
+            android:name="com.randy.launcher.receiver.WallpaperChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.WALLPAPER_CHANGED" />
             </intent-filter>
@@ -177,13 +177,13 @@
         </receiver>
 
         <!-- Intent received used to initialize a restored widget -->
-        <receiver android:name="com.randy.launcher.AppWidgetsRestoredReceiver" >
+        <receiver android:name="com.randy.launcher.receiver.AppWidgetsRestoredReceiver" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.randy.launcher.StartupReceiver" >
+        <receiver android:name="com.randy.launcher.receiver.StartupReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

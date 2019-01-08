@@ -32,7 +32,7 @@ import android.widget.TextView;
 
 import com.randy.launcher.DeviceProfile;
 import com.randy.launcher.InvariantDeviceProfile;
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.LauncherAppWidgetProviderInfo;

@@ -41,13 +41,17 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.beans.ItemInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
-import com.randy.launcher.model.PackageItemInfo;
+import com.randy.launcher.beans.PackageItemInfo;
 import com.randy.launcher.util.ComponentKey;
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.BubbleTextView;
 
 import java.util.Collections;
 import java.util.HashMap;

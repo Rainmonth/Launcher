@@ -74,7 +74,7 @@
          filter the activities shown in the launcher. Can be empty. -->
     <string name="app_filter_class" translatable="false"></string>
 
-    <!-- Name of a subclass of com.randy.launcher.BuildInfo used to
+    <!-- Name of a subclass of com.randy.launcher.beans.BuildInfo used to
          get build information. Can be empty. -->
     <string name="build_info_class" translatable="false"></string>
 

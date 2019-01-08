@@ -6,9 +6,11 @@ import java.util.List;
 
 /**
  * Central list of files the Launcher writes to the application data directory.
- *
+ * <p>
  * To add a new Launcher file, create a String constant referring to the filename, and add it to
  * ALL_FILES, as shown below.
+ *
+ * @author randy
  */
 public class LauncherFiles {
 

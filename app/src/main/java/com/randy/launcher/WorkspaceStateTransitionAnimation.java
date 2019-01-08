@@ -31,6 +31,8 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.animation.DecelerateInterpolator;
 
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.widget.main.Workspace;
 
 import java.util.HashMap;
 
@@ -90,6 +92,7 @@ class ZInterpolator implements TimeInterpolator {
         focalLength = foc;
     }
 
+    @Override
     public float getInterpolation(float input) {
         return (1.0f - focalLength / (focalLength + input)) /
                 (1.0f - focalLength / (focalLength + 1.0f));
@@ -101,9 +104,12 @@ class ZInterpolator implements TimeInterpolator {
  */
 class InverseZInterpolator implements TimeInterpolator {
     private ZInterpolator zInterpolator;
+
     public InverseZInterpolator(float foc) {
         zInterpolator = new ZInterpolator(foc);
     }
+
+    @Override
     public float getInterpolation(float input) {
         return 1 - zInterpolator.getInterpolation(1 - input);
     }
@@ -116,6 +122,7 @@ class ZoomInInterpolator implements TimeInterpolator {
     private final InverseZInterpolator inverseZInterpolator = new InverseZInterpolator(0.35f);
     private final DecelerateInterpolator decelerate = new DecelerateInterpolator(3.0f);
 
+    @Override
     public float getInterpolation(float input) {
         return decelerate.getInterpolation(inverseZInterpolator.getInterpolation(input));
     }
@@ -175,30 +182,49 @@ public class WorkspaceStateTransitionAnimation {
     public static final String TAG = "WorkspaceStateTransitionAnimation";
 
     public static final int SCROLL_TO_CURRENT_PAGE = -1;
-    @Thunk static final int BACKGROUND_FADE_OUT_DURATION = 350;
+    @Thunk
+    static final int BACKGROUND_FADE_OUT_DURATION = 350;
 
-    final @Thunk Launcher mLauncher;
-    final @Thunk Workspace mWorkspace;
+    final @Thunk
+    Launcher mLauncher;
+    final @Thunk
+    Workspace mWorkspace;
 
-    @Thunk AnimatorSet mStateAnimator;
-    @Thunk float[] mOldBackgroundAlphas;
-    @Thunk float[] mOldAlphas;
-    @Thunk float[] mNewBackgroundAlphas;
-    @Thunk float[] mNewAlphas;
-    @Thunk int mLastChildCount = -1;
+    @Thunk
+    AnimatorSet mStateAnimator;
+    @Thunk
+    float[] mOldBackgroundAlphas;
+    @Thunk
+    float[] mOldAlphas;
+    @Thunk
+    float[] mNewBackgroundAlphas;
+    @Thunk
+    float[] mNewAlphas;
+    @Thunk
+    int mLastChildCount = -1;
 
-    @Thunk float mCurrentScale;
-    @Thunk float mNewScale;
+    @Thunk
+    float mCurrentScale;
+    @Thunk
+    float mNewScale;
 
-    @Thunk final ZoomInInterpolator mZoomInInterpolator = new ZoomInInterpolator();
+    @Thunk
+    final ZoomInInterpolator mZoomInInterpolator = new ZoomInInterpolator();
 
-    @Thunk float mSpringLoadedShrinkFactor;
-    @Thunk float mOverviewModeShrinkFactor;
-    @Thunk float mWorkspaceScrimAlpha;
-    @Thunk int mAllAppsTransitionTime;
-    @Thunk int mOverviewTransitionTime;
-    @Thunk int mOverlayTransitionTime;
-    @Thunk boolean mWorkspaceFadeInAdjacentScreens;
+    @Thunk
+    float mSpringLoadedShrinkFactor;
+    @Thunk
+    float mOverviewModeShrinkFactor;
+    @Thunk
+    float mWorkspaceScrimAlpha;
+    @Thunk
+    int mAllAppsTransitionTime;
+    @Thunk
+    int mOverviewTransitionTime;
+    @Thunk
+    int mOverlayTransitionTime;
+    @Thunk
+    boolean mWorkspaceFadeInAdjacentScreens;
 
     public WorkspaceStateTransitionAnimation(Launcher launcher, Workspace workspace) {
         mLauncher = launcher;
@@ -218,7 +244,7 @@ public class WorkspaceStateTransitionAnimation {
     }
 
     public AnimatorSet getAnimationToState(Workspace.State fromState, Workspace.State toState,
-            int toPage, boolean animated, HashMap<View, Integer> layerViews) {
+                                           int toPage, boolean animated, HashMap<View, Integer> layerViews) {
         AccessibilityManager am = (AccessibilityManager)
                 mLauncher.getSystemService(Context.ACCESSIBILITY_SERVICE);
         final boolean accessibilityEnabled = am.isEnabled();
@@ -379,7 +405,7 @@ public class WorkspaceStateTransitionAnimation {
                             mNewBackgroundAlphas[i] != 0) {
                         ValueAnimator bgAnim = ObjectAnimator.ofFloat(cl, "backgroundAlpha",
                                 mOldBackgroundAlphas[i], mNewBackgroundAlphas[i]);
-                                LauncherAnimUtils.ofFloat(cl, 0f, 1f);
+                        LauncherAnimUtils.ofFloat(cl, 0f, 1f);
                         bgAnim.setInterpolator(mZoomInInterpolator);
                         bgAnim.setDuration(duration);
                         mStateAnimator.play(bgAnim);
@@ -473,12 +499,12 @@ public class WorkspaceStateTransitionAnimation {
     /**
      * Animates the background scrim. Add to the state animator to prevent jankiness.
      *
-     * @param states the current and final workspace states
+     * @param states   the current and final workspace states
      * @param animated whether or not to set the background alpha immediately
      * @duration duration of the animation
      */
     private void animateBackgroundGradient(TransitionStates states,
-            boolean animated, int duration) {
+                                           boolean animated, int duration) {
 
         final DragLayer dragLayer = mLauncher.getDragLayer();
         final float startAlpha = dragLayer.getBackgroundAlpha();
@@ -494,7 +520,7 @@ public class WorkspaceStateTransitionAnimation {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
                         dragLayer.setBackgroundAlpha(
-                                ((Float)animation.getAnimatedValue()).floatValue());
+                                ((Float) animation.getAnimatedValue()).floatValue());
                     }
                 });
                 bgFadeOutAnimation.setInterpolator(new DecelerateInterpolator(1.5f));

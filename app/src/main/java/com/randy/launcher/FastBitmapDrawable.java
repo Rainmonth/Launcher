@@ -107,6 +107,7 @@ public class FastBitmapDrawable extends Drawable {
         mPaint.setAntiAlias(filterBitmap);
     }
 
+    @Override
     public int getAlpha() {
         return mAlpha;
     }

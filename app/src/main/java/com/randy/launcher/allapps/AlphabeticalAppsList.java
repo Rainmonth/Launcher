@@ -19,7 +19,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.randy.launcher.AppInfo;
+import com.randy.launcher.beans.AppInfo;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.compat.AlphabeticIndexCompat;

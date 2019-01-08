@@ -16,8 +16,8 @@
 
 package com.randy.launcher.accessibility;
 
-import com.randy.launcher.CellLayout;
-import com.randy.launcher.FolderPagedView;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.widget.FolderPagedView;
 import com.randy.launcher.R;
 
 /**

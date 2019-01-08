@@ -74,15 +74,15 @@ public class InvariantDeviceProfile {
     /**
      * Number of icons inside the hotseat area.
      */
-    float numHotseatIcons;
-    float hotseatIconSize;
-    int defaultLayoutId;
+    public float numHotseatIcons;
+    public float hotseatIconSize;
+    public int defaultLayoutId;
 
     // Derived invariant properties
-    int hotseatAllAppsRank;
+    public int hotseatAllAppsRank;
 
-    DeviceProfile landscapeProfile;
-    DeviceProfile portraitProfile;
+    public DeviceProfile landscapeProfile;
+    public DeviceProfile portraitProfile;
 
     InvariantDeviceProfile() {
     }
@@ -252,6 +252,7 @@ public class InvariantDeviceProfile {
         // Sort the profiles by their closeness to the dimensions
         ArrayList<InvariantDeviceProfile> pointsByNearness = points;
         Collections.sort(pointsByNearness, new Comparator<InvariantDeviceProfile>() {
+            @Override
             public int compare(InvariantDeviceProfile a, InvariantDeviceProfile b) {
                 return (int) (dist(width, height, a.minWidthDps, a.minHeightDps)
                         - dist(width, height, b.minWidthDps, b.minHeightDps));

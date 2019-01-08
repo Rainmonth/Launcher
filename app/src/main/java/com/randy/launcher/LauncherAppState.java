@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.util.Log;
 
 import com.randy.launcher.accessibility.LauncherAccessibilityDelegate;
+import com.randy.launcher.beans.BuildInfo;
 import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.PackageInstallerCompat;
 import com.randy.launcher.compat.UserManagerCompat;
@@ -30,6 +31,9 @@ import com.randy.launcher.util.Thunk;
 
 import java.lang.ref.WeakReference;
 
+/**
+ * @author randy
+ */
 public class LauncherAppState {
 
     private final AppFilter mAppFilter;

@@ -34,7 +34,14 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 
+import com.randy.launcher.beans.ShortcutInfo;
+import com.randy.launcher.impl.DeleteDropTarget;
+import com.randy.launcher.impl.DragScroller;
+import com.randy.launcher.impl.DragSource;
+import com.randy.launcher.impl.DropTarget;
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.main.DragView;
+import com.randy.launcher.widget.main.PagedView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -63,9 +70,9 @@ public class DragController {
     private static final int SCROLL_OUTSIDE_ZONE = 0;
     private static final int SCROLL_WAITING_IN_ZONE = 1;
 
-    static final int SCROLL_NONE = -1;
-    static final int SCROLL_LEFT = 0;
-    static final int SCROLL_RIGHT = 1;
+    public static final int SCROLL_NONE = -1;
+    public static final int SCROLL_LEFT = 0;
+    public static final int SCROLL_RIGHT = 1;
 
     private static final float MAX_FLING_DEGREES = 35f;
 
@@ -659,6 +666,8 @@ public class DragController {
                 mHandler.removeCallbacks(mScrollRunnable);
                 cancelDrag();
                 break;
+            default:
+                break;
         }
 
         return true;
@@ -699,8 +708,12 @@ public class DragController {
      * @return the vector at which the item was flung, or null if no fling was detected.
      */
     private PointF isFlingingToDelete(DragSource source) {
-        if (mFlingToDeleteDropTarget == null) return null;
-        if (!source.supportsFlingToDelete()) return null;
+        if (mFlingToDeleteDropTarget == null) {
+            return null;
+        }
+        if (!source.supportsFlingToDelete()) {
+            return null;
+        }
 
         ViewConfiguration config = ViewConfiguration.get(mLauncher);
         mVelocityTracker.computeCurrentVelocity(1000, config.getScaledMaximumFlingVelocity());

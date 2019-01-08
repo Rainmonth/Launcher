@@ -11,11 +11,11 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.randy.launcher.AppInfo;
-import com.randy.launcher.InsettableFrameLayout;
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.widget.base.InsettableFrameLayout;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAnimUtils;
-import com.randy.launcher.LauncherCallbacks;
+import com.randy.launcher.impl.LauncherCallbacks;
 import com.randy.launcher.R;
 import com.randy.launcher.allapps.AllAppsSearchBarController;
 import com.randy.launcher.util.ComponentKey;

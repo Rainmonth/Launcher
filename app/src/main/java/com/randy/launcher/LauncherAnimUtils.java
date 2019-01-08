@@ -34,17 +34,21 @@ import java.util.WeakHashMap;
 public class LauncherAnimUtils {
     static WeakHashMap<Animator, Object> sAnimators = new WeakHashMap<Animator, Object>();
     static Animator.AnimatorListener sEndAnimListener = new Animator.AnimatorListener() {
+        @Override
         public void onAnimationStart(Animator animation) {
             sAnimators.put(animation, null);
         }
 
+        @Override
         public void onAnimationRepeat(Animator animation) {
         }
 
+        @Override
         public void onAnimationEnd(Animator animation) {
             sAnimators.remove(animation);
         }
 
+        @Override
         public void onAnimationCancel(Animator animation) {
             sAnimators.remove(animation);
         }
@@ -59,6 +63,7 @@ public class LauncherAnimUtils {
     public static void startAnimationAfterNextDraw(final Animator animator, final View view) {
         view.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
                 private boolean mStarted = false;
+                @Override
                 public void onDraw() {
                     if (mStarted) return;
                     mStarted = true;

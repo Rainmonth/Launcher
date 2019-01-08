@@ -25,14 +25,14 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.util.Log;
 
-import com.randy.launcher.FolderInfo;
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.FolderInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.LauncherFiles;
 import com.randy.launcher.LauncherModel;
 import com.randy.launcher.MainThreadExecutor;
 import com.randy.launcher.R;
-import com.randy.launcher.ShortcutInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.Utilities;
 import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.LauncherAppsCompat;

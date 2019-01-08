@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
-import com.randy.launcher.BubbleTextView;
 import com.randy.launcher.DeviceProfile;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppState;
@@ -37,7 +36,7 @@ import com.randy.launcher.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.R;
 import com.randy.launcher.Utilities;
 import com.randy.launcher.WidgetPreviewLoader;
-import com.randy.launcher.model.PackageItemInfo;
+import com.randy.launcher.beans.PackageItemInfo;
 import com.randy.launcher.model.WidgetsModel;
 
 import java.util.List;

@@ -25,6 +25,7 @@ import android.util.Pair;
 import android.view.View;
 
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.main.PagedView;
 
 public class FocusIndicatorView extends View implements View.OnFocusChangeListener {
 

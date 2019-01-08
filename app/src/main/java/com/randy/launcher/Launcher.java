@@ -97,18 +97,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randy.launcher.allapps.AllAppsContainerView;
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.beans.FolderInfo;
+import com.randy.launcher.beans.ItemInfo;
+import com.randy.launcher.beans.PendingAddItemInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.compat.AppWidgetManagerCompat;
 import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
+import com.randy.launcher.impl.CustomAppWidget;
+import com.randy.launcher.impl.DragSource;
+import com.randy.launcher.impl.DropTarget;
+import com.randy.launcher.impl.LauncherCallbacks;
+import com.randy.launcher.impl.LauncherProviderChangeListener;
 import com.randy.launcher.model.WidgetsModel;
 import com.randy.launcher.util.ComponentKey;
 import com.randy.launcher.util.LongArrayMap;
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.BubbleTextView;
+import com.randy.launcher.widget.Folder;
+import com.randy.launcher.widget.FolderIcon;
 import com.randy.launcher.widget.PendingAddWidgetInfo;
 import com.randy.launcher.widget.WidgetHostViewLoader;
 import com.randy.launcher.widget.WidgetsContainerView;
+import com.randy.launcher.widget.base.InsettableFrameLayout;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.widget.main.DragView;
+import com.randy.launcher.widget.main.HotSeat;
+import com.randy.launcher.widget.main.PagedView;
+import com.randy.launcher.widget.main.Workspace;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -126,6 +145,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Default launcher application.
+ *
+ * @author randy
  */
 public class Launcher extends Activity
         implements OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
@@ -215,6 +236,9 @@ public class Launcher extends Activity
      * The different states that Launcher can be in.
      */
     enum State {
+        /**
+         *
+         */
         NONE, WORKSPACE, APPS, APPS_SPRING_LOADED, WIDGETS, WIDGETS_SPRING_LOADED
     }
 
@@ -229,7 +253,7 @@ public class Launcher extends Activity
     LauncherOverlay mLauncherOverlay;
     InsettableFrameLayout mLauncherOverlayContainer;
 
-    static final int APPWIDGET_HOST_ID = 1024;
+    public static final int APPWIDGET_HOST_ID = 1024;
     public static final int EXIT_SPRINGLOADED_MODE_SHORT_TIMEOUT = 300;
     private static final int ON_ACTIVITY_RESULT_ANIMATION_DELAY = 500;
     private static final int ACTIVITY_START_DELAY = 1000;
@@ -249,7 +273,7 @@ public class Launcher extends Activity
     private LayoutInflater mInflater;
 
     @Thunk
-    Workspace mWorkspace;
+    public Workspace mWorkspace;
     private View mLauncherView;
     private View mPageIndicators;
     @Thunk
@@ -404,7 +428,7 @@ public class Launcher extends Activity
     }
 
     private Stats mStats;
-    FocusIndicatorView mFocusHandler;
+    public FocusIndicatorView mFocusHandler;
     private boolean mRotationEnabled = false;
 
     @Thunk
@@ -689,7 +713,10 @@ public class Launcher extends Activity
                 final int result = sNextGeneratedId.get();
                 // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
                 int newValue = result + 1;
-                if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+                if (newValue > 0x00FFFFFF) {
+                    // Roll over to 1, not 0.
+                    newValue = 1;
+                }
                 if (sNextGeneratedId.compareAndSet(result, newValue)) {
                     return result;
                 }
@@ -2408,7 +2435,7 @@ public class Launcher extends Activity
         }
     }
 
-    FolderIcon addFolder(CellLayout layout, long container, final long screenId, int cellX,
+    public FolderIcon addFolder(CellLayout layout, long container, final long screenId, int cellX,
                          int cellY) {
         final FolderInfo folderInfo = new FolderInfo();
         folderInfo.title = getText(R.string.folder_name);
@@ -2429,7 +2456,7 @@ public class Launcher extends Activity
         return newFolder;
     }
 
-    void removeFolder(FolderInfo folder) {
+    public void removeFolder(FolderInfo folder) {
         sFolders.remove(folder.id);
     }
 
@@ -2445,11 +2472,15 @@ public class Launcher extends Activity
                         return true;
                     }
                     break;
+                default:
+                    break;
             }
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
             switch (event.getKeyCode()) {
                 case KeyEvent.KEYCODE_HOME:
                     return true;
+                default:
+                    break;
             }
         }
 
@@ -2846,7 +2877,7 @@ public class Launcher extends Activity
      * Called when the user stops interacting with the launcher.
      * This implies that the user is now on the homescreen and is not doing housekeeping.
      */
-    protected void onInteractionEnd() {
+    public void onInteractionEnd() {
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onInteractionEnd();
         }
@@ -2861,7 +2892,7 @@ public class Launcher extends Activity
      * This is a good time to stop doing things that only make sense
      * when the user is on the homescreen and not doing housekeeping.
      */
-    protected void onInteractionBegin() {
+    public void onInteractionBegin() {
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onInteractionBegin();
         }
@@ -2882,7 +2913,7 @@ public class Launcher extends Activity
         }
     }
 
-    void startApplicationDetailsActivity(ComponentName componentName, UserHandleCompat user) {
+    public void startApplicationDetailsActivity(ComponentName componentName, UserHandleCompat user) {
         try {
             LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(this);
             launcherApps.showAppDetailsForProfile(componentName, user);
@@ -2896,8 +2927,8 @@ public class Launcher extends Activity
     }
 
     // returns true if the activity was started
-    boolean startApplicationUninstallActivity(ComponentName componentName, int flags,
-                                              UserHandleCompat user) {
+    public boolean startApplicationUninstallActivity(ComponentName componentName, int flags,
+                                                     UserHandleCompat user) {
         if ((flags & AppInfo.DOWNLOADED_FLAG) == 0) {
             // System applications cannot be installed. For now, show a toast explaining that.
             // We may give them the option of disabling apps this way.
@@ -3070,7 +3101,9 @@ public class Launcher extends Activity
     }
 
     private void growAndFadeOutFolderIcon(FolderIcon fi) {
-        if (fi == null) return;
+        if (fi == null) {
+            return;
+        }
         PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.5f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.5f);
@@ -3096,7 +3129,9 @@ public class Launcher extends Activity
     }
 
     private void shrinkAndFadeInFolderIcon(final FolderIcon fi) {
-        if (fi == null) return;
+        if (fi == null) {
+            return;
+        }
         PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 1.0f);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.0f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.0f);
@@ -3191,10 +3226,17 @@ public class Launcher extends Activity
         getDragLayer().sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
     }
 
+    @Override
     public boolean onLongClick(View v) {
-        if (!isDraggingEnabled()) return false;
-        if (isWorkspaceLocked()) return false;
-        if (mState != State.WORKSPACE) return false;
+        if (!isDraggingEnabled()) {
+            return false;
+        }
+        if (isWorkspaceLocked()) {
+            return false;
+        }
+        if (mState != State.WORKSPACE) {
+            return false;
+        }
 
         if (v == mAllAppsButton) {
             onLongClickAllAppsButton(v);
@@ -3252,7 +3294,7 @@ public class Launcher extends Activity
         return true;
     }
 
-    boolean isHotseatLayout(View layout) {
+    public boolean isHotseatLayout(View layout) {
         return mHotSeat != null && layout != null &&
                 (layout instanceof CellLayout) && (layout == mHotSeat.getLayout());
     }
@@ -3367,7 +3409,7 @@ public class Launcher extends Activity
         }
     }
 
-    void showOverviewMode(boolean animated) {
+    public void showOverviewMode(boolean animated) {
         mWorkspace.setVisibility(View.VISIBLE);
         mStateTransitionAnimation.startAnimationToWorkspace(mState, mWorkspace.getState(),
                 Workspace.State.OVERVIEW,
@@ -3394,7 +3436,9 @@ public class Launcher extends Activity
      * Shows the widgets view.
      */
     void showWidgetsView(boolean animated, boolean resetPageToZero) {
-        if (LOGD) Log.d(TAG, "showWidgetsView:" + animated + " resetPageToZero:" + resetPageToZero);
+        if (LOGD) {
+            Log.d(TAG, "showWidgetsView:" + animated + " resetPageToZero:" + resetPageToZero);
+        }
         if (resetPageToZero) {
             mWidgetsView.scrollToTop();
         }
@@ -3458,7 +3502,9 @@ public class Launcher extends Activity
     }
 
     public void enterSpringLoadedDragMode() {
-        if (LOGD) Log.d(TAG, String.format("enterSpringLoadedDragMode [mState=%s", mState.name()));
+        if (LOGD) {
+            Log.d(TAG, String.format("enterSpringLoadedDragMode [mState=%s", mState.name()));
+        }
         if (mState == State.WORKSPACE || mState == State.APPS_SPRING_LOADED ||
                 mState == State.WIDGETS_SPRING_LOADED) {
             return;
@@ -3493,7 +3539,7 @@ public class Launcher extends Activity
         }, delay);
     }
 
-    void exitSpringLoadedDragMode() {
+    public void exitSpringLoadedDragMode() {
         if (mState == State.APPS_SPRING_LOADED) {
             showAppsView(true /* animated */, false /* resetListToTop */,
                     false /* updatePredictedApps */, false /* focusSearchBar */);
@@ -3698,6 +3744,7 @@ public class Launcher extends Activity
      * <p>
      * Implementation of the method from LauncherModel.Callbacks.
      */
+    @Override
     public void startBinding() {
         setWorkspaceLoading(true);
 
@@ -4431,7 +4478,7 @@ public class Launcher extends Activity
      * This method indicates whether or not we should suggest default wallpaper dimensions
      * when our wallpaper cropper was not yet used to set a wallpaper.
      */
-    protected boolean overrideWallpaperDimensions() {
+    public boolean overrideWallpaperDimensions() {
         if (mLauncherCallbacks != null) {
             return mLauncherCallbacks.overrideWallpaperDimensions();
         }
@@ -4739,9 +4786,11 @@ public class Launcher extends Activity
         return sCustomAppWidgets;
     }
 
+    @Override
     public void dumpLogsToLocalData() {
         if (DEBUG_DUMP_LOG) {
             new AsyncTask<Void, Void, Void>() {
+                @Override
                 public Void doInBackground(Void... args) {
                     boolean success = false;
                     sDateStamp.setTime(sRunStart);

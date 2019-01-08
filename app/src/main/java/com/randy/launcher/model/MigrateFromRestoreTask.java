@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.randy.launcher.InvariantDeviceProfile;
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.LauncherModel;

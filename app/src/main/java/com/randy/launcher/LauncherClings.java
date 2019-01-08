@@ -36,6 +36,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.accessibility.AccessibilityManager;
 
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.main.PagedView;
 
 class LauncherClings implements OnClickListener {
     private static final String MIGRATION_CLING_DISMISSED_KEY = "cling_gel.migration.dismissed";

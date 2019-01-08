@@ -48,6 +48,11 @@ import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.Pair;
 
+import com.randy.launcher.beans.AllAppsList;
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.beans.FolderInfo;
+import com.randy.launcher.beans.ItemInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.compat.AppWidgetManagerCompat;
 import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.LauncherAppsCompat;
@@ -55,13 +60,18 @@ import com.randy.launcher.compat.PackageInstallerCompat;
 import com.randy.launcher.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
+import com.randy.launcher.impl.CustomAppWidget;
 import com.randy.launcher.model.MigrateFromRestoreTask;
 import com.randy.launcher.model.WidgetsModel;
+import com.randy.launcher.receiver.StartupReceiver;
 import com.randy.launcher.util.ComponentKey;
 import com.randy.launcher.util.CursorIconInfo;
 import com.randy.launcher.util.LongArrayMap;
 import com.randy.launcher.util.ManagedProfileHeuristic;
 import com.randy.launcher.util.Thunk;
+import com.randy.launcher.widget.Folder;
+import com.randy.launcher.widget.FolderIcon;
+import com.randy.launcher.widget.main.PagedView;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;
@@ -667,8 +677,8 @@ public class LauncherModel extends BroadcastReceiver
      * Adds an item to the DB if it was not created previously, or move it to a new
      * <container, screen, cellX, cellY>
      */
-    static void addOrMoveItemInDatabase(Context context, ItemInfo item, long container,
-                                        long screenId, int cellX, int cellY) {
+    public static void addOrMoveItemInDatabase(Context context, ItemInfo item, long container,
+                                               long screenId, int cellX, int cellY) {
         if (item.container == ItemInfo.NO_ID) {
             // From all apps
             addItemToDatabase(context, item, container, screenId, cellX, cellY);
@@ -678,7 +688,7 @@ public class LauncherModel extends BroadcastReceiver
         }
     }
 
-    static void checkItemInfoLocked(
+    public static void checkItemInfoLocked(
             final long itemId, final ItemInfo item, StackTraceElement[] stackTrace) {
         ItemInfo modelItem = sBgItemsIdMap.get(itemId);
         if (modelItem != null && item != modelItem) {
@@ -721,7 +731,7 @@ public class LauncherModel extends BroadcastReceiver
         }
     }
 
-    static void checkItemInfo(final ItemInfo item) {
+    public static void checkItemInfo(final ItemInfo item) {
         final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
         final long itemId = item.id;
         Runnable r = new Runnable() {
@@ -853,8 +863,8 @@ public class LauncherModel extends BroadcastReceiver
      * Move items in the DB to a new <container, screen, cellX, cellY>. We assume that the
      * cellX, cellY have already been updated on the ItemInfos.
      */
-    static void moveItemsInDatabase(Context context, final ArrayList<ItemInfo> items,
-                                    final long container, final int screen) {
+    public static void moveItemsInDatabase(Context context, final ArrayList<ItemInfo> items,
+                                           final long container, final int screen) {
 
         ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();
         int count = items.size();
@@ -888,8 +898,8 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Move and/or resize item in the DB to a new <container, screen, cellX, cellY, spanX, spanY>
      */
-    static void modifyItemInDatabase(Context context, final ItemInfo item, final long container,
-                                     final long screenId, final int cellX, final int cellY, final int spanX, final int spanY) {
+    public static void modifyItemInDatabase(Context context, final ItemInfo item, final long container,
+                                            final long screenId, final int cellX, final int cellY, final int spanX, final int spanY) {
         item.container = container;
         item.cellX = cellX;
         item.cellY = cellY;
@@ -982,13 +992,15 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Find a folder in the db, creating the FolderInfo if necessary, and adding it to folderList.
      */
-    FolderInfo getFolderById(Context context, LongArrayMap<FolderInfo> folderList, long id) {
+    public FolderInfo getFolderById(Context context, LongArrayMap<FolderInfo> folderList, long id) {
         final ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(LauncherSettings.Favorites.CONTENT_URI, null,
                 "_id=? and (itemType=? or itemType=?)",
                 new String[]{String.valueOf(id),
                         String.valueOf(LauncherSettings.Favorites.ITEM_TYPE_FOLDER)}, null);
-
+        if (c == null) {
+            return null;
+        }
         try {
             if (c.moveToFirst()) {
                 final int itemTypeIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.ITEM_TYPE);
@@ -1004,18 +1016,21 @@ public class LauncherModel extends BroadcastReceiver
                     case LauncherSettings.Favorites.ITEM_TYPE_FOLDER:
                         folderInfo = findOrMakeFolder(folderList, id);
                         break;
+                    default:
+                        break;
                 }
+                if (folderInfo != null) {
+                    // Do not trim the folder label, as is was set by the user.
+                    folderInfo.title = c.getString(titleIndex);
+                    folderInfo.id = id;
+                    folderInfo.container = c.getInt(containerIndex);
+                    folderInfo.screenId = c.getInt(screenIndex);
+                    folderInfo.cellX = c.getInt(cellXIndex);
+                    folderInfo.cellY = c.getInt(cellYIndex);
+                    folderInfo.options = c.getInt(optionsIndex);
 
-                // Do not trim the folder label, as is was set by the user.
-                folderInfo.title = c.getString(titleIndex);
-                folderInfo.id = id;
-                folderInfo.container = c.getInt(containerIndex);
-                folderInfo.screenId = c.getInt(screenIndex);
-                folderInfo.cellX = c.getInt(cellXIndex);
-                folderInfo.cellY = c.getInt(cellYIndex);
-                folderInfo.options = c.getInt(optionsIndex);
-
-                return folderInfo;
+                    return folderInfo;
+                }
             }
         } finally {
             c.close();
@@ -1079,6 +1094,8 @@ public class LauncherModel extends BroadcastReceiver
                         case LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET:
                             sBgAppWidgets.add((LauncherAppWidgetInfo) item);
                             break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -1089,7 +1106,7 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Creates a new unique child id, for a given cell span across all layouts.
      */
-    static int getCellLayoutChildId(
+    public static int getCellLayoutChildId(
             long container, long screen, int localCellX, int localCellY, int spanX, int spanY) {
         return (((int) container & 0xFF) << 24)
                 | ((int) screen & 0xFF) << 16 | (localCellX & 0xFF) << 8 | (localCellY & 0xFF);
@@ -1109,8 +1126,8 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Removes all the items from the database corresponding to the specified package.
      */
-    static void deletePackageFromDatabase(Context context, final String pn,
-                                          final UserHandleCompat user) {
+    public static void deletePackageFromDatabase(Context context, final String pn,
+                                                 final UserHandleCompat user) {
         deleteItemsFromDatabase(context, getItemsByPackageName(pn, user));
     }
 
@@ -1132,7 +1149,7 @@ public class LauncherModel extends BroadcastReceiver
      * @param context
      * @param item
      */
-    static void deleteItemsFromDatabase(Context context, final ArrayList<? extends ItemInfo> items) {
+    public static void deleteItemsFromDatabase(Context context, final ArrayList<? extends ItemInfo> items) {
         final ContentResolver cr = context.getContentResolver();
         Runnable r = new Runnable() {
             public void run() {
@@ -1162,6 +1179,8 @@ public class LauncherModel extends BroadcastReceiver
                                 break;
                             case LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET:
                                 sBgAppWidgets.remove((LauncherAppWidgetInfo) item);
+                                break;
+                            default:
                                 break;
                         }
                         sBgItemsIdMap.remove(item.id);
@@ -1317,7 +1336,9 @@ public class LauncherModel extends BroadcastReceiver
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (DEBUG_RECEIVER) Log.d(TAG, "onReceive intent=" + intent);
+        if (DEBUG_RECEIVER) {
+            Log.d(TAG, "onReceive intent=" + intent);
+        }
 
         final String action = intent.getAction();
         if (Intent.ACTION_LOCALE_CHANGED.equals(action)) {
@@ -1335,7 +1356,7 @@ public class LauncherModel extends BroadcastReceiver
         }
     }
 
-    void forceReload() {
+    public void forceReload() {
         resetLoadedState(true, true);
 
         // Do this here because if the launcher activity is running it will be restarted.
@@ -1349,8 +1370,12 @@ public class LauncherModel extends BroadcastReceiver
             // Stop any existing loaders first, so they don't set mAllAppsLoaded or
             // mWorkspaceLoaded to true later
             stopLoaderLocked();
-            if (resetAllAppsLoaded) mAllAppsLoaded = false;
-            if (resetWorkspaceLoaded) mWorkspaceLoaded = false;
+            if (resetAllAppsLoaded) {
+                mAllAppsLoaded = false;
+            }
+            if (resetWorkspaceLoaded) {
+                mWorkspaceLoaded = false;
+            }
         }
     }
 
@@ -1418,7 +1443,7 @@ public class LauncherModel extends BroadcastReceiver
         }
     }
 
-    void bindRemainingSynchronousPages() {
+    public void bindRemainingSynchronousPages() {
         // Post the remaining side pages to be loaded
         if (!mDeferredBindRunnables.isEmpty()) {
             Runnable[] deferredBindRunnables = null;
@@ -1586,6 +1611,7 @@ public class LauncherModel extends BroadcastReceiver
             onlyBindAllApps();
         }
 
+        @Override
         public void run() {
             synchronized (mLock) {
                 if (mStopped) {
@@ -2817,8 +2843,7 @@ public class LauncherModel extends BroadcastReceiver
             }
 
             // shallow copy
-            @SuppressWarnings("unchecked")
-            final ArrayList<AppInfo> list
+            @SuppressWarnings("unchecked") final ArrayList<AppInfo> list
                     = (ArrayList<AppInfo>) mBgAllAppsList.data.clone();
             final WidgetsModel widgetList = mBgWidgetsModel.clone();
             Runnable r = new Runnable() {
@@ -3055,8 +3080,10 @@ public class LauncherModel extends BroadcastReceiver
         public static final int OP_NONE = 0;
         public static final int OP_ADD = 1;
         public static final int OP_UPDATE = 2;
-        public static final int OP_REMOVE = 3; // uninstlled
-        public static final int OP_UNAVAILABLE = 4; // external media unmounted
+        // uninstlled
+        public static final int OP_REMOVE = 3;
+        // external media unmounted
+        public static final int OP_UNAVAILABLE = 4;
 
 
         public PackageUpdatedTask(int op, String[] packages, UserHandleCompat user) {
@@ -3065,6 +3092,7 @@ public class LauncherModel extends BroadcastReceiver
             mUser = user;
         }
 
+        @Override
         public void run() {
             if (!mHasLoaderCompletedOnce) {
                 // Loader has not yet run.
@@ -3077,7 +3105,9 @@ public class LauncherModel extends BroadcastReceiver
             switch (mOp) {
                 case OP_ADD: {
                     for (int i = 0; i < N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.addPackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.addPackage " + packages[i]);
+                        }
                         mIconCache.updateIconsForPkg(packages[i], mUser);
                         mBgAllAppsList.addPackage(context, packages[i], mUser);
                     }
@@ -3090,7 +3120,9 @@ public class LauncherModel extends BroadcastReceiver
                 }
                 case OP_UPDATE:
                     for (int i = 0; i < N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.updatePackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.updatePackage " + packages[i]);
+                        }
                         mIconCache.updateIconsForPkg(packages[i], mUser);
                         mBgAllAppsList.updatePackage(context, packages[i], mUser);
                         mApp.getWidgetCache().removePackage(packages[i], mUser);
@@ -3102,17 +3134,23 @@ public class LauncherModel extends BroadcastReceiver
                         heuristic.processPackageRemoved(mPackages);
                     }
                     for (int i = 0; i < N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.removePackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.removePackage " + packages[i]);
+                        }
                         mIconCache.removeIconsForPkg(packages[i], mUser);
                     }
                     // Fall through
                 }
                 case OP_UNAVAILABLE:
                     for (int i = 0; i < N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.removePackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.removePackage " + packages[i]);
+                        }
                         mBgAllAppsList.removePackage(packages[i], mUser);
                         mApp.getWidgetCache().removePackage(packages[i], mUser);
                     }
+                    break;
+                default:
                     break;
             }
 
@@ -3627,8 +3665,8 @@ public class LauncherModel extends BroadcastReceiver
         return info;
     }
 
-    static ArrayList<ItemInfo> filterItemInfos(Iterable<ItemInfo> infos,
-                                               ItemInfoFilter f) {
+    public static ArrayList<ItemInfo> filterItemInfos(Iterable<ItemInfo> infos,
+                                                      ItemInfoFilter f) {
         HashSet<ItemInfo> filtered = new HashSet<ItemInfo>();
         for (ItemInfo i : infos) {
             if (i instanceof ShortcutInfo) {
@@ -3761,7 +3799,7 @@ public class LauncherModel extends BroadcastReceiver
     }
 
 
-    static boolean isValidProvider(AppWidgetProviderInfo provider) {
+    public static boolean isValidProvider(AppWidgetProviderInfo provider) {
         return (provider != null) && (provider.provider != null)
                 && (provider.provider.getPackageName() != null);
     }

@@ -17,8 +17,8 @@ package com.randy.launcher.model;
 
 import android.content.Context;
 
-import com.randy.launcher.AppInfo;
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.util.Thunk;
 
 import java.text.Collator;

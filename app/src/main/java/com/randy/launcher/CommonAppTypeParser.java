@@ -23,6 +23,7 @@ import android.content.res.XmlResourceParser;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.util.Thunk;
 
 import org.xmlpull.v1.XmlPullParserException;

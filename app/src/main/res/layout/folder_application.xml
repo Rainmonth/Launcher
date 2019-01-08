@@ -14,6 +14,6 @@
      limitations under the License.
 -->
 
-<com.randy.launcher.BubbleTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randy.launcher.widget.BubbleTextView xmlns:android="http://schemas.android.com/apk/res/android"
    style="@style/Icon.Folder"
    android:focusable="true" />

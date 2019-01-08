@@ -46,6 +46,7 @@ import com.randy.gallery3d.common.Utils;
 import com.randy.launcher.base.BaseActivity;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.WallpaperUtils;
+import com.randy.launcher.widget.CropView;
 import com.randy.photos.BitmapRegionTileSource;
 import com.randy.photos.views.TiledImageRenderer;
 

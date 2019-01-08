@@ -21,8 +21,11 @@ import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
+/**
+ * @author randy
+ */
 public class CheckableFrameLayout extends FrameLayout implements Checkable {
-    private static final int[] CHECKED_STATE_SET = { android.R.attr.state_checked };
+    private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
     boolean mChecked;
 
     public CheckableFrameLayout(Context context) {
@@ -37,10 +40,12 @@ public class CheckableFrameLayout extends FrameLayout implements Checkable {
         super(context, attrs, defStyle);
     }
 
+    @Override
     public boolean isChecked() {
         return mChecked;
     }
 
+    @Override
     public void setChecked(boolean checked) {
         if (checked != mChecked) {
             mChecked = checked;
@@ -48,6 +53,7 @@ public class CheckableFrameLayout extends FrameLayout implements Checkable {
         }
     }
 
+    @Override
     public void toggle() {
         setChecked(!mChecked);
     }

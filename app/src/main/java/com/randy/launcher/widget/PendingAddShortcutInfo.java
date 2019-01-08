@@ -19,7 +19,7 @@ import android.content.ComponentName;
 import android.content.pm.ActivityInfo;
 
 import com.randy.launcher.LauncherSettings;
-import com.randy.launcher.PendingAddItemInfo;
+import com.randy.launcher.beans.PendingAddItemInfo;
 
 /**
  * Meta data used for late binding of the short cuts.

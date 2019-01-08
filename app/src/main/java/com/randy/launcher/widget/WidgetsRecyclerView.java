@@ -23,8 +23,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.randy.launcher.BaseRecyclerView;
-import com.randy.launcher.model.PackageItemInfo;
+import com.randy.launcher.widget.base.BaseRecyclerView;
+import com.randy.launcher.beans.PackageItemInfo;
 import com.randy.launcher.model.WidgetsModel;
 
 /**
@@ -60,6 +60,7 @@ public class WidgetsRecyclerView extends BaseRecyclerView {
         addOnItemTouchListener(this);
     }
 
+    @Override
     public int getFastScrollerTrackColor(int defaultTrackColor) {
         return Color.WHITE;
     }

@@ -22,7 +22,7 @@ import android.os.Parcelable;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.LauncherSettings;
-import com.randy.launcher.PendingAddItemInfo;
+import com.randy.launcher.beans.PendingAddItemInfo;
 import com.randy.launcher.compat.AppWidgetManagerCompat;
 
 /**

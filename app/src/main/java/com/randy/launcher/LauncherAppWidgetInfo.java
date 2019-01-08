@@ -21,7 +21,9 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.compat.UserHandleCompat;
+import com.randy.launcher.widget.AppWidgetResizeFrame;
 
 /**
  * Represents a widget (either instantiated or about to be) in the Launcher.
@@ -64,19 +66,19 @@ public class LauncherAppWidgetInfo extends ItemInfo {
      * Identifier for this widget when talking with
      * {@link android.appwidget.AppWidgetManager} for updates.
      */
-    int appWidgetId = NO_ID;
+    public int appWidgetId = NO_ID;
 
-    ComponentName providerName;
+    public ComponentName providerName;
 
     /**
      * Indicates the restore status of the widget.
      */
-    int restoreStatus;
+    public int restoreStatus;
 
     /**
      * Indicates the installation progress of the widget provider
      */
-    int installProgress = -1;
+    public int installProgress = -1;
 
     private boolean mHasNotifiedInitialWidgetSizeChanged;
 
@@ -84,7 +86,7 @@ public class LauncherAppWidgetInfo extends ItemInfo {
      * View that holds this widget after it's been created.  This view isn't created
      * until Launcher knows it's needed.
      */
-    AppWidgetHostView hostView = null;
+    public AppWidgetHostView hostView = null;
 
     LauncherAppWidgetInfo(int appWidgetId, ComponentName providerName) {
         if (appWidgetId == CUSTOM_WIDGET_ID) {
@@ -110,7 +112,7 @@ public class LauncherAppWidgetInfo extends ItemInfo {
     }
 
     @Override
-    void onAddToDatabase(Context context, ContentValues values) {
+    public void onAddToDatabase(Context context, ContentValues values) {
         super.onAddToDatabase(context, values);
         values.put(LauncherSettings.Favorites.APPWIDGET_ID, appWidgetId);
         values.put(LauncherSettings.Favorites.APPWIDGET_PROVIDER, providerName.flattenToString());
@@ -141,7 +143,7 @@ public class LauncherAppWidgetInfo extends ItemInfo {
     }
 
     @Override
-    void unbind() {
+    public void unbind() {
         super.unbind();
         hostView = null;
     }

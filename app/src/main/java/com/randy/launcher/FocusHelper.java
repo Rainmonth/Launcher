@@ -24,26 +24,11 @@ import android.view.ViewGroup;
 
 import com.randy.launcher.util.FocusLogic;
 import com.randy.launcher.util.Thunk;
-
-/**
- * A keyboard listener we set on all the workspace icons.
- */
-class IconKeyEventListener implements View.OnKeyListener {
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        return FocusHelper.handleIconKeyEvent(v, keyCode, event);
-    }
-}
-
-/**
- * A keyboard listener we set on all the hotseat buttons.
- */
-class HotseatIconKeyEventListener implements View.OnKeyListener {
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        return FocusHelper.handleHotseatButtonKeyEvent(v, keyCode, event);
-    }
-}
+import com.randy.launcher.widget.Folder;
+import com.randy.launcher.widget.FolderPagedView;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.widget.main.HotSeat;
+import com.randy.launcher.widget.main.Workspace;
 
 public class FocusHelper {
 

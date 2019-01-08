@@ -21,7 +21,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.randy.launcher.CellLayout;
+import com.randy.launcher.widget.main.CellLayout;
 import com.randy.launcher.ShortcutAndWidgetContainer;
 
 import java.util.Arrays;

@@ -23,7 +23,7 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.randy.launcher.LauncherSettings;
-import com.randy.launcher.ShortcutInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.Utilities;
 
 /**

@@ -18,6 +18,8 @@ package com.randy.launcher;
 
 import android.os.Handler;
 
+import com.randy.launcher.impl.OnAlarmListener;
+
 public class Alarm implements Runnable{
     // if we reach this time and the alarm hasn't been cancelled, call the listener
     private long mAlarmTriggerTime;

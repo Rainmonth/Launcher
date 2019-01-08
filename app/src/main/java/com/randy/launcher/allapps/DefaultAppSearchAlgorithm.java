@@ -17,7 +17,7 @@ package com.randy.launcher.allapps;
 
 import android.os.Handler;
 
-import com.randy.launcher.AppInfo;
+import com.randy.launcher.beans.AppInfo;
 import com.randy.launcher.util.ComponentKey;
 
 import java.util.ArrayList;

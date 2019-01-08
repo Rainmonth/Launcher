@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Full screen view projects under the status bar and contains the background -->
-<com.randy.launcher.LauncherRootView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randy.launcher.widget.base.LauncherRootView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:launcher="http://schemas.android.com/apk/res-auto"
     android:id="@+id/launcher"
     android:layout_width="match_parent"
@@ -20,7 +20,7 @@
 
         <!-- The workspace contains 5 screens of cells -->
         <!-- DO NOT CHANGE THE ID -->
-        <com.randy.launcher.Workspace
+        <com.randy.launcher.widget.main.Workspace
             android:id="@+id/workspace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,4 +65,4 @@
         android:layout_height="match_parent"
         android:inflatedId="@+id/launcher_overlay"
         android:layout="@layout/launcher_overlay" />
-</com.randy.launcher.LauncherRootView>
+</com.randy.launcher.widget.base.LauncherRootView>

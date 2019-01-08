@@ -52,6 +52,7 @@ import android.util.SparseArray;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.compat.UserManagerCompat;
 import com.randy.launcher.config.ProviderConfig;
+import com.randy.launcher.impl.LauncherProviderChangeListener;
 import com.randy.launcher.util.ManagedProfileHeuristic;
 import com.randy.launcher.util.Thunk;
 
@@ -76,7 +77,8 @@ public class LauncherProvider extends ContentProvider {
 
     private static final String RESTRICTION_PACKAGE_NAME = "workspace.configuration.package.name";
 
-    @Thunk LauncherProviderChangeListener mListener;
+    @Thunk
+    LauncherProviderChangeListener mListener;
     @Thunk DatabaseHelper mOpenHelper;
 
     @Override

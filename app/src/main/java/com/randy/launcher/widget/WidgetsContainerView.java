@@ -28,22 +28,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.randy.launcher.BaseContainerView;
-import com.randy.launcher.CellLayout;
-import com.randy.launcher.DeleteDropTarget;
+import com.randy.launcher.widget.base.BaseContainerView;
+import com.randy.launcher.widget.main.CellLayout;
+import com.randy.launcher.impl.DeleteDropTarget;
 import com.randy.launcher.DeviceProfile;
 import com.randy.launcher.DragController;
-import com.randy.launcher.DragSource;
-import com.randy.launcher.DropTarget.DragObject;
-import com.randy.launcher.Folder;
+import com.randy.launcher.impl.DragSource;
+import com.randy.launcher.impl.DropTarget.DragObject;
 import com.randy.launcher.IconCache;
-import com.randy.launcher.ItemInfo;
+import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.LauncherAppState;
-import com.randy.launcher.PendingAddItemInfo;
+import com.randy.launcher.beans.PendingAddItemInfo;
 import com.randy.launcher.Utilities;
 import com.randy.launcher.WidgetPreviewLoader;
-import com.randy.launcher.Workspace;
+import com.randy.launcher.widget.main.Workspace;
 import com.randy.launcher.model.WidgetsModel;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.R;
@@ -99,6 +98,7 @@ public class WidgetsContainerView extends BaseContainerView
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         mContent = findViewById(R.id.content);
         mView = (WidgetsRecyclerView) findViewById(R.id.widgets_list_view);
         mView.setAdapter(mAdapter);

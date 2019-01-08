@@ -29,6 +29,9 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.beans.ItemInfo;
+import com.randy.launcher.beans.ShortcutInfo;
 import com.randy.launcher.compat.LauncherActivityInfoCompat;
 import com.randy.launcher.compat.LauncherAppsCompat;
 import com.randy.launcher.compat.UserHandleCompat;
@@ -46,6 +49,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * @author randy
+ */
 public class InstallShortcutReceiver extends BroadcastReceiver {
     private static final String TAG = "InstallShortcutReceiver";
     private static final boolean DBG = false;
@@ -141,6 +147,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     // processAllPendingInstalls() is called.
     private static boolean mUseInstallQueue = false;
 
+    @Override
     public void onReceive(Context context, Intent data) {
         if (!ACTION_INSTALL_SHORTCUT.equals(data.getAction())) {
             return;
@@ -148,7 +155,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
 
         PendingInstallShortcutInfo info = new PendingInstallShortcutInfo(data, context);
         if (info.launchIntent == null || info.label == null) {
-            if (DBG) Log.e(TAG, "Invalid install shortcut intent");
+            if (DBG) {
+                Log.e(TAG, "Invalid install shortcut intent");
+            }
             return;
         }
 
@@ -159,7 +168,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     public static ShortcutInfo fromShortcutIntent(Context context, Intent data) {
         PendingInstallShortcutInfo info = new PendingInstallShortcutInfo(data, context);
         if (info.launchIntent == null || info.label == null) {
-            if (DBG) Log.e(TAG, "Invalid install shortcut intent");
+            if (DBG) {
+                Log.e(TAG, "Invalid install shortcut intent");
+            }
             return null;
         }
         info = convertToLauncherActivityIfPossible(info);
@@ -184,10 +195,10 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         }
     }
 
-    static void enableInstallQueue() {
+    public static void enableInstallQueue() {
         mUseInstallQueue = true;
     }
-    static void disableAndFlushInstallQueue(Context context) {
+    public static void disableAndFlushInstallQueue(Context context) {
         mUseInstallQueue = false;
         flushInstallQueue(context);
     }

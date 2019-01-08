@@ -24,6 +24,8 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.randy.launcher.widget.main.CellLayout;
+
 public class ShortcutAndWidgetContainer extends ViewGroup {
     static final String TAG = "CellLayoutChildren";
 
@@ -132,7 +134,7 @@ public class ShortcutAndWidgetContainer extends ViewGroup {
                 grid.hotseatCellWidthPx: grid.cellWidthPx);
     }
 
-    int getCellContentHeight() {
+    public int getCellContentHeight() {
         final DeviceProfile grid = mLauncher.getDeviceProfile();
         return Math.min(getMeasuredHeight(), mIsHotseatLayout ?
                 grid.hotseatCellHeightPx : grid.cellHeightPx);
@@ -225,7 +227,7 @@ public class ShortcutAndWidgetContainer extends ViewGroup {
     }
 
     @Override
-    protected void setChildrenDrawingCacheEnabled(boolean enabled) {
+    public void setChildrenDrawingCacheEnabled(boolean enabled) {
         final int count = getChildCount();
         for (int i = 0; i < count; i++) {
             final View view = getChildAt(i);
@@ -238,7 +240,7 @@ public class ShortcutAndWidgetContainer extends ViewGroup {
     }
 
     @Override
-    protected void setChildrenDrawnWithCacheEnabled(boolean enabled) {
+    public void setChildrenDrawnWithCacheEnabled(boolean enabled) {
         super.setChildrenDrawnWithCacheEnabled(enabled);
     }
 }

@@ -25,12 +25,20 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 
+import com.randy.launcher.beans.ShortcutInfo;
+
+/**
+ * @author randy
+ */
 public class Stats {
 
     /**
      * Implemented by containers to provide a launch source for a given child.
      */
     public interface LaunchSourceProvider {
+        /**
+         * @param sourceData
+         */
         void fillInLaunchSourceData(Bundle sourceData);
     }
 

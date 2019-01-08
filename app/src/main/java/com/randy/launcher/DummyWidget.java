@@ -2,6 +2,13 @@ package com.randy.launcher;
 
 import android.appwidget.AppWidgetProviderInfo;
 
+import com.randy.launcher.impl.CustomAppWidget;
+
+/**
+ * fake widget just an example
+ *
+ * @author randy
+ */
 public class DummyWidget implements CustomAppWidget {
     @Override
     public String getLabel() {

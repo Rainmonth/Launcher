@@ -9,6 +9,8 @@ import android.view.ViewConfiguration;
  * This can occur in {@value MotionEvent#ACTION_DOWN} or {@value MotionEvent#ACTION_MOVE}. On a
  * stylus button press this performs the view's {@link View#performLongClick()} method, if the view
  * is long clickable.
+ *
+ * @author randy
  */
 public class StylusEventHelper {
     private boolean mIsButtonPressed;
@@ -56,6 +58,8 @@ public class StylusEventHelper {
             case MotionEvent.ACTION_CANCEL:
                 mIsButtonPressed = false;
                 break;
+            default:
+                break;
         }
         return false;
     }
@@ -77,6 +81,6 @@ public class StylusEventHelper {
     private static boolean isStylusButtonPressed(MotionEvent event) {
         return event.getToolType(0) == MotionEvent.TOOL_TYPE_STYLUS
                 && ((event.getButtonState() & MotionEvent.BUTTON_SECONDARY)
-                        == MotionEvent.BUTTON_SECONDARY);
+                == MotionEvent.BUTTON_SECONDARY);
     }
 }

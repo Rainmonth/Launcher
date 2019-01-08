@@ -8,8 +8,8 @@ import android.graphics.Rect;
 import android.view.animation.DecelerateInterpolator;
 
 import com.randy.launcher.DragLayer;
-import com.randy.launcher.DragView;
-import com.randy.launcher.DropTarget.DragObject;
+import com.randy.launcher.widget.main.DragView;
+import com.randy.launcher.impl.DropTarget.DragObject;
 
 public class FlingAnimation implements AnimatorUpdateListener {
 

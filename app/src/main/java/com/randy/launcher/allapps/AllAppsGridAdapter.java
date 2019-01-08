@@ -37,8 +37,8 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
 
-import com.randy.launcher.AppInfo;
-import com.randy.launcher.BubbleTextView;
+import com.randy.launcher.beans.AppInfo;
+import com.randy.launcher.widget.BubbleTextView;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.R;
 import com.randy.launcher.Utilities;

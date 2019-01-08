@@ -28,7 +28,7 @@ import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 
 import com.randy.launcher.R;
 import com.randy.launcher.Utilities;
-import com.randy.launcher.Workspace;
+import com.randy.launcher.widget.main.Workspace;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class OverviewScreenAccessibilityDelegate extends AccessibilityDelegate {
