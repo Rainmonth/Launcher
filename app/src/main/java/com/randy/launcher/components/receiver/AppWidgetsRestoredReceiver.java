@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.beans.LauncherAppWidgetInfo;
 import com.randy.launcher.config.LauncherSettings;
 

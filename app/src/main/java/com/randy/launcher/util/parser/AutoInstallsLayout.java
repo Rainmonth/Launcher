@@ -36,7 +36,7 @@ import android.util.Pair;
 import android.util.Patterns;
 
 import com.randy.launcher.util.InvariantDeviceProfile;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.provider.LauncherProvider;
 import com.randy.launcher.R;
 import com.randy.launcher.util.Utilities;

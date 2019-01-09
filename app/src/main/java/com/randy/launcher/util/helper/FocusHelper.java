@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.R;
 import com.randy.launcher.ui.widget.ShortcutAndWidgetContainer;
 import com.randy.launcher.util.DeviceProfile;

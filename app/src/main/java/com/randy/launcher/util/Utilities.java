@@ -56,7 +56,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Toast;
 
-import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.R;
 import com.randy.launcher.beans.ItemInfo;

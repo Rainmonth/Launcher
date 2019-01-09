@@ -53,6 +53,7 @@ import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.config.LauncherFiles;
 import com.randy.launcher.util.ComponentKey;
 import com.randy.launcher.util.InvariantDeviceProfile;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.BubbleTextView;

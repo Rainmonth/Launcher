@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.beans.ItemInfo;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.components.provider.LauncherProvider;

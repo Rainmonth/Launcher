@@ -15,7 +15,7 @@ import android.os.Parcel;
 import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.util.InvariantDeviceProfile;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.beans.LauncherAppWidgetInfo;
 import com.randy.launcher.ui.widget.CustomAppWidget;
 import com.randy.launcher.util.Utilities;

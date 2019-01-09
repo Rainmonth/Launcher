@@ -10,7 +10,7 @@ import com.randy.launcher.AppFilter;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.beans.ItemInfo;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.beans.PackageItemInfo;

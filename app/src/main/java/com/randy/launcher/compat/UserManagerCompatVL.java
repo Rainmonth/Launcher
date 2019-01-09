@@ -25,7 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.UserHandle;
 
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.LongArrayMap;
 

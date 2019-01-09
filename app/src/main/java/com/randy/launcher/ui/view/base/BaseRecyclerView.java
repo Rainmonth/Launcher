@@ -153,6 +153,8 @@ public abstract class BaseRecyclerView extends RecyclerView
                 onFastScrollCompleted();
                 mScrollbar.handleTouchEvent(ev, mDownX, mDownY, mLastY);
                 break;
+            default:
+                break;
         }
         return mScrollbar.isDraggingThumb();
     }

@@ -21,7 +21,7 @@ import android.util.Log;
 
 import com.randy.launcher.beans.AppInfo;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.compat.AlphabeticIndexCompat;
 import com.randy.launcher.compat.UserHandleCompat;
 import com.randy.launcher.model.AppNameComparator;

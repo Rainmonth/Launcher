@@ -53,7 +53,7 @@ import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.ui.animator.InterruptibleInOutAnimator;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.util.LauncherAnimUtils;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.R;
 import com.randy.launcher.ui.widget.ShortcutAndWidgetContainer;
 import com.randy.launcher.util.helper.StylusEventHelper;

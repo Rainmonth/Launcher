@@ -27,7 +27,6 @@ import android.util.Log;
 
 import com.randy.launcher.beans.FolderInfo;
 import com.randy.launcher.beans.ItemInfo;
-import com.randy.launcher.LauncherAppState;
 import com.randy.launcher.config.LauncherFiles;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.MainThreadExecutor;

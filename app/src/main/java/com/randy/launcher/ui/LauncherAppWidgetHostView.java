@@ -29,7 +29,7 @@ import android.widget.RemoteViews;
 import com.randy.launcher.util.helper.CheckLongPressHelper;
 import com.randy.launcher.ui.view.DragLayer;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.R;
 import com.randy.launcher.util.helper.StylusEventHelper;

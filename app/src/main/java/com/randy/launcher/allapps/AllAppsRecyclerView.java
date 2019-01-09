@@ -29,7 +29,7 @@ import com.randy.launcher.ui.view.base.BaseRecyclerView;
 import com.randy.launcher.ui.view.base.BaseRecyclerViewFastScrollBar;
 import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.R;
-import com.randy.launcher.Stats;
+import com.randy.launcher.util.Stats;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.Thunk;
 

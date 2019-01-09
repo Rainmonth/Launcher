@@ -131,7 +131,9 @@ import com.randy.launcher.ui.widget.PendingAppWidgetHostView;
 import com.randy.launcher.util.ComponentKey;
 import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.util.LauncherAnimUtils;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.util.LongArrayMap;
+import com.randy.launcher.util.Stats;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.BubbleTextView;
@@ -780,6 +782,8 @@ public class Launcher extends Activity
                 break;
             case REQUEST_RECONFIGURE_APPWIDGET:
                 completeRestoreAppWidget(args.appWidgetId);
+                break;
+            default:
                 break;
         }
         // Before adding this resetAddInfo(), after a shortcut was added to a workspace screen,

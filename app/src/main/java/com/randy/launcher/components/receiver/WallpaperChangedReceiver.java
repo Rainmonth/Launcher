@@ -20,7 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 
 public class WallpaperChangedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent data) {

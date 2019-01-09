@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.randy.launcher;
+package com.randy.launcher.util;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -22,6 +22,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import com.randy.launcher.AppFilter;
+import com.randy.launcher.IconCache;
+import com.randy.launcher.Launcher;
+import com.randy.launcher.R;
 import com.randy.launcher.accessibility.LauncherAccessibilityDelegate;
 import com.randy.launcher.beans.BuildInfo;
 import com.randy.launcher.compat.LauncherAppsCompat;
@@ -32,13 +36,13 @@ import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.components.service.MemoryTracker;
 import com.randy.launcher.config.LauncherFiles;
 import com.randy.launcher.ui.widget.WidgetPreviewLoader;
-import com.randy.launcher.util.InvariantDeviceProfile;
-import com.randy.launcher.util.Thunk;
-import com.randy.launcher.util.Utilities;
 
 import java.lang.ref.WeakReference;
 
 /**
+ * 单利模式的管理类，用来提供Launcher使用过程中用到的各种实例：
+ * context、 InvariantDeviceProfile、LauncherModel、IconCache，etc
+ *
  * @author randy
  */
 public class LauncherAppState {
@@ -135,7 +139,7 @@ public class LauncherAppState {
         mModel.startLoaderFromBackground();
     }
 
-    LauncherModel setLauncher(Launcher launcher) {
+    public LauncherModel setLauncher(Launcher launcher) {
         getLauncherProvider().setLauncherProviderChangeListener(launcher);
         mModel.initialize(launcher);
         mAccessibilityDelegate = ((launcher != null) && Utilities.ATLEAST_LOLLIPOP) ?

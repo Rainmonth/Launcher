@@ -42,7 +42,7 @@ import com.randy.launcher.impl.DropTarget.DragObject;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.beans.PendingAddItemInfo;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.view.main.Workspace;

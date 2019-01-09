@@ -50,7 +50,7 @@ import com.randy.launcher.ui.view.main.DragView;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.util.LauncherAnimUtils;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.config.LauncherSettings;
 import com.randy.launcher.impl.OnAlarmListener;
 import com.randy.launcher.R;

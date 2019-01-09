@@ -52,7 +52,7 @@ import com.randy.launcher.AppFilter;
 import com.randy.launcher.DeferredHandler;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.R;
 import com.randy.launcher.beans.AllAppsList;
 import com.randy.launcher.beans.AppInfo;

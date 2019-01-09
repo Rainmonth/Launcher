@@ -64,7 +64,7 @@ import com.randy.launcher.config.LauncherSettings;
 import com.randy.launcher.ui.animator.LogDecelerateInterpolator;
 import com.randy.launcher.impl.OnAlarmListener;
 import com.randy.launcher.R;
-import com.randy.launcher.Stats;
+import com.randy.launcher.util.Stats;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.view.main.Workspace;
 import com.randy.launcher.accessibility.LauncherAccessibilityDelegate.AccessibilityDragSource;

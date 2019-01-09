@@ -42,7 +42,7 @@ import com.randy.launcher.ui.view.DragController;
 import com.randy.launcher.ui.view.DragLayer;
 import com.randy.launcher.ui.view.main.DragView;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.R;
 import com.randy.launcher.ui.view.main.SearchDropTargetBar;
 import com.randy.launcher.util.Utilities;

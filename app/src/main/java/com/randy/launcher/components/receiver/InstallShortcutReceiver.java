@@ -29,7 +29,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.beans.AppInfo;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.beans.ShortcutInfo;

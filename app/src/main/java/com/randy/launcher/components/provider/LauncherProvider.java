@@ -51,7 +51,7 @@ import android.util.SparseArray;
 
 import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.LauncherClings;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.MainThreadExecutor;

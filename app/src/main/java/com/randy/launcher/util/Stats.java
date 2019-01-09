@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.randy.launcher;
+package com.randy.launcher.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,9 +25,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 
+import com.randy.launcher.Launcher;
+import com.randy.launcher.R;
 import com.randy.launcher.beans.ShortcutInfo;
 
 /**
+ * 工具类，用来记录Launcher当前多处的状态
  * @author randy
  */
 public class Stats {
@@ -37,7 +40,9 @@ public class Stats {
      */
     public interface LaunchSourceProvider {
         /**
-         * @param sourceData
+         * 填充SourceData信息（不同的实现者填充的数据不同）
+         *
+         * @param sourceData 已经记录的bundle信息
          */
         void fillInLaunchSourceData(Bundle sourceData);
     }

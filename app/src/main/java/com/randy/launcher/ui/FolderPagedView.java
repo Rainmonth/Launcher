@@ -34,7 +34,7 @@ import com.randy.launcher.ui.view.main.FocusIndicatorView;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.ui.view.main.PageIndicator;
 import com.randy.launcher.ui.view.main.PagedView;

@@ -34,7 +34,7 @@ import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.util.InvariantDeviceProfile;
 import com.randy.launcher.beans.ItemInfo;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.provider.LauncherAppWidgetProviderInfo;
 import com.randy.launcher.R;
 import com.randy.launcher.util.helper.StylusEventHelper;

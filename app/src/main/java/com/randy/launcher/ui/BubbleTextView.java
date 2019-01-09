@@ -46,7 +46,7 @@ import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.util.helper.HolographicOutlineHelper;
 import com.randy.launcher.IconCache;
 import com.randy.launcher.Launcher;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.R;
 import com.randy.launcher.util.helper.StylusEventHelper;

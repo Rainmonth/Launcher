@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.Launcher;
 import com.randy.launcher.R;
-import com.randy.launcher.Stats;
+import com.randy.launcher.util.Stats;
 
 /**
  * @author randy

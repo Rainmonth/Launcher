@@ -38,6 +38,7 @@ import android.view.accessibility.AccessibilityManager;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.ui.animator.LogDecelerateInterpolator;
 import com.randy.launcher.util.LauncherAnimUtils;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.BorderCropDrawable;

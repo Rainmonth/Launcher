@@ -26,7 +26,7 @@ import android.os.Handler;
 import android.util.SparseArray;
 
 import com.randy.launcher.IconCache;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.util.Thunk;
 

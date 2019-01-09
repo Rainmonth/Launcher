@@ -26,7 +26,7 @@ import android.view.View.OnClickListener;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.randy.launcher.ui.view.main.CellLayout;
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.R;
 
 import java.util.List;

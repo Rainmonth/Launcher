@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.LinearLayout;
 
-import com.randy.launcher.LauncherAppState;
+import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.R;
 
 /**
