@@ -265,6 +265,7 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
             anim.getAnimator().setInterpolator(mEaseOutInterpolator);
             final int thisIndex = i;
             anim.getAnimator().addUpdateListener(new AnimatorUpdateListener() {
+                @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     final Bitmap outline = (Bitmap) anim.getTag();
 
@@ -650,13 +651,19 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         if (lp.cellX >= 0 && lp.cellX <= mCountX - 1 && lp.cellY >= 0 && lp.cellY <= mCountY - 1) {
             // If the horizontal or vertical span is set to -1, it is taken to
             // mean that it spans the extent of the CellLayout
-            if (lp.cellHSpan < 0) lp.cellHSpan = mCountX;
-            if (lp.cellVSpan < 0) lp.cellVSpan = mCountY;
+            if (lp.cellHSpan < 0) {
+                lp.cellHSpan = mCountX;
+            }
+            if (lp.cellVSpan < 0) {
+                lp.cellVSpan = mCountY;
+            }
 
             child.setId(childId);
             mShortcutsAndWidgets.addView(child, index, lp);
 
-            if (markCells) markCellsAsOccupiedForView(child);
+            if (markCells) {
+                markCellsAsOccupiedForView(child);
+            }
 
             return true;
         }
@@ -728,10 +735,18 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         final int xAxis = mCountX;
         final int yAxis = mCountY;
 
-        if (result[0] < 0) result[0] = 0;
-        if (result[0] >= xAxis) result[0] = xAxis - 1;
-        if (result[1] < 0) result[1] = 0;
-        if (result[1] >= yAxis) result[1] = yAxis - 1;
+        if (result[0] < 0) {
+            result[0] = 0;
+        }
+        if (result[0] >= xAxis) {
+            result[0] = xAxis - 1;
+        }
+        if (result[1] < 0) {
+            result[1] = 0;
+        }
+        if (result[1] >= yAxis) {
+            result[1] = yAxis - 1;
+        }
     }
 
     /**
@@ -1019,6 +1034,7 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
             va.addListener(new AnimatorListenerAdapter() {
                 boolean cancelled = false;
 
+                @Override
                 public void onAnimationEnd(Animator animation) {
                     // If the animation was cancelled, it means that another animation
                     // has interrupted this one, and we don't want to lock the item into
@@ -1032,6 +1048,7 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
                     }
                 }
 
+                @Override
                 public void onAnimationCancel(Animator animation) {
                     cancelled = true;
                 }
@@ -1604,6 +1621,7 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         class PositionComparator implements Comparator<View> {
             int whichEdge = 0;
 
+            @Override
             public int compare(View left, View right) {
                 CellAndSpan l = config.map.get(left);
                 CellAndSpan r = config.map.get(right);
@@ -1724,7 +1742,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
 
     private boolean addViewsToTempLocation(ArrayList<View> views, Rect rectOccupiedByPotentialDrop,
                                            int[] direction, View dragView, ItemConfiguration currentState) {
-        if (views.size() == 0) return true;
+        if (views.size() == 0) {
+            return true;
+        }
 
         boolean success = false;
         Rect boundingRect = null;
@@ -1883,7 +1903,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
     private boolean rearrangementExists(int cellX, int cellY, int spanX, int spanY, int[] direction,
                                         View ignoreView, ItemConfiguration solution) {
         // Return early if get invalid cell positions
-        if (cellX < 0 || cellY < 0) return false;
+        if (cellX < 0 || cellY < 0) {
+            return false;
+        }
 
         mIntersectingViews.clear();
         mOccupiedRect.set(cellX, cellY, cellX + spanX, cellY + spanY);
@@ -1899,7 +1921,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         Rect r0 = new Rect(cellX, cellY, cellX + spanX, cellY + spanY);
         Rect r1 = new Rect();
         for (View child : solution.map.keySet()) {
-            if (child == ignoreView) continue;
+            if (child == ignoreView) {
+                continue;
+            }
             CellAndSpan c = solution.map.get(child);
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             r1.set(c.x, c.y, c.x + c.spanX, c.y + c.spanY);
@@ -2027,7 +2051,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         int childCount = mShortcutsAndWidgets.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = mShortcutsAndWidgets.getChildAt(i);
-            if (child == dragView) continue;
+            if (child == dragView) {
+                continue;
+            }
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             CellAndSpan c = solution.map.get(child);
             if (c != null) {
@@ -2055,7 +2081,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         int childCount = mShortcutsAndWidgets.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = mShortcutsAndWidgets.getChildAt(i);
-            if (child == dragView) continue;
+            if (child == dragView) {
+                continue;
+            }
             CellAndSpan c = solution.map.get(child);
             if (c != null) {
                 animateChildToPosition(child, c.x, c.y, REORDER_ANIMATION_DURATION, 0,
@@ -2076,7 +2104,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         int childCount = mShortcutsAndWidgets.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = mShortcutsAndWidgets.getChildAt(i);
-            if (child == dragView) continue;
+            if (child == dragView) {
+                continue;
+            }
             CellAndSpan c = solution.map.get(child);
             boolean skip = mode == ReorderPreviewAnimation.MODE_HINT && solution.intersectingViews
                     != null && !solution.intersectingViews.contains(child);
@@ -2179,6 +2209,7 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
                 }
             });
             va.addListener(new AnimatorListenerAdapter() {
+                @Override
                 public void onAnimationRepeat(Animator animation) {
                     // We make sure to end only after a full period
                     initDeltaX = 0;
@@ -2340,7 +2371,9 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
         final int count = mShortcutsAndWidgets.getChildCount();
         for (int i = 0; i < count; i++) {
             View child = mShortcutsAndWidgets.getChildAt(i);
-            if (child == dragView) continue;
+            if (child == dragView) {
+                continue;
+            }
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             r1.set(lp.cellX, lp.cellY, lp.cellX + lp.cellHSpan, lp.cellY + lp.cellVSpan);
             if (Rect.intersects(r0, r1)) {
@@ -2590,7 +2623,6 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
      * @param pixelY     The Y location at which you want to search for a vacant area.
      * @param spanX      Horizontal span of the object.
      * @param spanY      Vertical span of the object.
-     * @param ignoreView Considers space occupied by this view as unoccupied
      * @param result     Previously returned value to possibly recycle.
      * @return The X, Y cell of a vacant area that can contain this object,
      * nearest the requested location.
@@ -2724,20 +2756,26 @@ public class CellLayout extends ViewGroup implements BubbleTextView.BubbleTextSh
     }
 
     public void markCellsAsOccupiedForView(View view) {
-        if (view == null || view.getParent() != mShortcutsAndWidgets) return;
+        if (view == null || view.getParent() != mShortcutsAndWidgets) {
+            return;
+        }
         LayoutParams lp = (LayoutParams) view.getLayoutParams();
         markCellsForView(lp.cellX, lp.cellY, lp.cellHSpan, lp.cellVSpan, mOccupied, true);
     }
 
     public void markCellsAsUnoccupiedForView(View view) {
-        if (view == null || view.getParent() != mShortcutsAndWidgets) return;
+        if (view == null || view.getParent() != mShortcutsAndWidgets) {
+            return;
+        }
         LayoutParams lp = (LayoutParams) view.getLayoutParams();
         markCellsForView(lp.cellX, lp.cellY, lp.cellHSpan, lp.cellVSpan, mOccupied, false);
     }
 
     private void markCellsForView(int cellX, int cellY, int spanX, int spanY, boolean[][] occupied,
                                   boolean value) {
-        if (cellX < 0 || cellY < 0) return;
+        if (cellX < 0 || cellY < 0) {
+            return;
+        }
         for (int x = cellX; x < cellX + spanX && x < mCountX; x++) {
             for (int y = cellY; y < cellY + spanY && y < mCountY; y++) {
                 occupied[x][y] = value;

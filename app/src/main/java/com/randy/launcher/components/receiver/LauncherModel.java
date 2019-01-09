@@ -83,7 +83,7 @@ import com.randy.launcher.util.Utilities;
 import com.randy.launcher.util.parser.CommonAppTypeParser;
 import com.randy.launcher.ui.Folder;
 import com.randy.launcher.ui.FolderIcon;
-import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.base.PagedView;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;
@@ -1257,6 +1257,7 @@ public class LauncherModel extends BroadcastReceiver
         final ContentResolver cr = context.getContentResolver();
 
         Runnable r = new Runnable() {
+            @Override
             public void run() {
                 cr.delete(LauncherSettings.Favorites.getContentUri(info.id), null, null);
                 // Lock on mBgLock *after* the db operation

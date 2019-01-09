@@ -44,7 +44,7 @@ import com.randy.launcher.impl.DropTarget;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.view.main.DragView;
-import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.base.PagedView;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -35,7 +35,7 @@ import android.widget.LinearLayout;
 
 import com.randy.launcher.Launcher;
 import com.randy.launcher.R;
-import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.base.PagedView;
 
 public class DeviceProfile {
 

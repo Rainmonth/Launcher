@@ -60,6 +60,7 @@ import android.view.animation.Interpolator;
 import android.widget.TextView;
 
 import com.randy.launcher.Alarm;
+import com.randy.launcher.ui.view.base.PagedView;
 import com.randy.launcher.util.DeviceProfile;
 import com.randy.launcher.ui.view.DragController;
 import com.randy.launcher.ui.view.DragLayer;
@@ -545,6 +546,7 @@ public class Workspace extends PagedView
         super.onChildViewAdded(parent, child);
     }
 
+    @Override
     protected boolean shouldDrawChild(View child) {
         final CellLayout cl = (CellLayout) child;
         return super.shouldDrawChild(child) &&
@@ -1243,6 +1245,7 @@ public class Workspace extends PagedView
         }
     }
 
+    @Override
     protected void onPageBeginMoving() {
         super.onPageBeginMoving();
 
@@ -1260,6 +1263,7 @@ public class Workspace extends PagedView
         }
     }
 
+    @Override
     protected void onPageEndMoving() {
         super.onPageEndMoving();
 

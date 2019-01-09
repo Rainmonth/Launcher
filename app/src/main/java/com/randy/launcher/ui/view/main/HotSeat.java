@@ -149,6 +149,7 @@ public class HotSeat extends FrameLayout
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         // We don't want any clicks to go through to the hotseat unless the workspace is in
         // the normal state.
+        // 防止点击事件穿透
         if (mLauncher.getWorkspace().workspaceInModalState()) {
             return true;
         }

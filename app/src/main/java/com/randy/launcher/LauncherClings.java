@@ -42,7 +42,7 @@ import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.util.Thunk;
 import com.randy.launcher.util.Utilities;
 import com.randy.launcher.ui.BorderCropDrawable;
-import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.base.PagedView;
 
 /**
  * Launcher 启动引导

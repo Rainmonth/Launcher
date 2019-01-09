@@ -149,7 +149,7 @@ import com.randy.launcher.ui.view.main.CellLayout;
 import com.randy.launcher.ui.view.main.DragView;
 import com.randy.launcher.ui.view.main.FocusIndicatorView;
 import com.randy.launcher.ui.view.main.HotSeat;
-import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.base.PagedView;
 import com.randy.launcher.ui.view.main.SearchDropTargetBar;
 import com.randy.launcher.ui.view.main.Workspace;
 import com.randy.launcher.util.helper.FirstFrameAnimatorHelper;
@@ -2967,6 +2967,12 @@ public class Launcher extends Activity
         }
     }
 
+    /**
+     * 查看应用详细信息
+     *
+     * @param componentName 应用名称
+     * @param user          所属用户
+     */
     public void startApplicationDetailsActivity(ComponentName componentName, UserHandleCompat user) {
         try {
             LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(this);
@@ -2980,7 +2986,14 @@ public class Launcher extends Activity
         }
     }
 
-    // returns true if the activity was started
+    /**
+     * 卸载应用
+     *
+     * @param componentName 应用名称
+     * @param flags         应用标记
+     * @param user          所属用户
+     * @return True 如果进入了App卸载页
+     */
     public boolean startApplicationUninstallActivity(ComponentName componentName, int flags,
                                                      UserHandleCompat user) {
         if ((flags & AppInfo.DOWNLOADED_FLAG) == 0) {
@@ -4807,7 +4820,7 @@ public class Launcher extends Activity
     }
 
     /**
-     * Resizes an icon drawable to the correct icon size.
+     * 调整icon的大小
      */
     public void resizeIconDrawable(Drawable icon) {
         icon.setBounds(0, 0, mDeviceProfile.iconSizePx, mDeviceProfile.iconSizePx);

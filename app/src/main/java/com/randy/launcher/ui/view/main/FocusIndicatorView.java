@@ -24,6 +24,7 @@ import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.View;
 
+import com.randy.launcher.ui.view.base.PagedView;
 import com.randy.launcher.util.LauncherAnimUtils;
 import com.randy.launcher.R;
 import com.randy.launcher.util.Thunk;

@@ -37,7 +37,7 @@ import com.randy.launcher.Launcher;
 import com.randy.launcher.util.LauncherAppState;
 import com.randy.launcher.components.receiver.LauncherModel;
 import com.randy.launcher.ui.view.main.PageIndicator;
-import com.randy.launcher.ui.view.main.PagedView;
+import com.randy.launcher.ui.view.base.PagedView;
 import com.randy.launcher.R;
 import com.randy.launcher.ui.widget.ShortcutAndWidgetContainer;
 import com.randy.launcher.util.Utilities;
@@ -273,6 +273,11 @@ public class FolderPagedView extends PagedView {
     @Override
     protected int getChildGap() {
         return getPaddingLeft() + getPaddingRight();
+    }
+
+    @Override
+    protected boolean shouldDrawChild(View child) {
+        return super.shouldDrawChild(child);
     }
 
     public void setFixedSize(int width, int height) {
@@ -525,6 +530,11 @@ public class FolderPagedView extends PagedView {
         for (int i = sTempPosArray[0]; i <= sTempPosArray[1]; i++) {
             verifyVisibleHighResIcons(i);
         }
+    }
+
+    @Override
+    protected void onPageEndMoving() {
+        super.onPageEndMoving();
     }
 
     /**
