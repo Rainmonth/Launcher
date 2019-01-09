@@ -556,6 +556,7 @@ public class Workspace extends PagedView
     }
 
     /**
+     * 获取打开的文件夹
      * @return The open folder on the current screen, or null if there is none
      */
     public Folder getOpenFolder() {
@@ -565,8 +566,9 @@ public class Workspace extends PagedView
             View child = dragLayer.getChildAt(i);
             if (child instanceof Folder) {
                 Folder folder = (Folder) child;
-                if (folder.getInfo().opened)
+                if (folder.getInfo().opened) {
                     return folder;
+                }
             }
         }
         return null;
@@ -636,6 +638,9 @@ public class Workspace extends PagedView
         return screenId;
     }
 
+    /**
+     * 添加自定义的Screen（类似于某些厂商Launcher最左的那一页）
+     */
     public void createCustomContentContainer() {
         CellLayout customScreen = (CellLayout)
                 mLauncher.getLayoutInflater().inflate(R.layout.workspace_screen, this, false);
@@ -660,6 +665,9 @@ public class Workspace extends PagedView
         }
     }
 
+    /**
+     * 移除自定义的那一屏
+     */
     public void removeCustomContentPage() {
         CellLayout customScreen = getScreenWithId(CUSTOM_CONTENT_SCREEN_ID);
         if (customScreen == null) {
@@ -688,6 +696,12 @@ public class Workspace extends PagedView
         }
     }
 
+    /***
+     * 向自定义屏添加内容
+     * @param customContent 要添加的内容
+     * @param callbacks 对应的回调
+     * @param description 自定义内容描述
+     */
     public void addToCustomContentPage(View customContent, Launcher.CustomContentCallbacks callbacks,
                                        String description) {
         if (getPageIndexForScreenId(CUSTOM_CONTENT_SCREEN_ID) < 0) {
@@ -717,6 +731,9 @@ public class Workspace extends PagedView
         mCustomContentCallbacks = callbacks;
     }
 
+    /**
+     * 拖动时添加空屏
+     */
     public void addExtraEmptyScreenOnDrag() {
         boolean lastChildOnScreen = false;
         boolean childOnFinalScreen = false;
@@ -743,6 +760,10 @@ public class Workspace extends PagedView
         }
     }
 
+    /**
+     * 添加空屏
+     * @return
+     */
     public boolean addExtraEmptyScreen() {
         if (!mWorkspaceScreens.containsKey(EXTRA_EMPTY_SCREEN_ID)) {
             insertNewWorkspaceScreen(EXTRA_EMPTY_SCREEN_ID);
@@ -758,10 +779,14 @@ public class Workspace extends PagedView
             return;
         }
 
-        if (hasExtraEmptyScreen() || mScreenOrder.size() == 0) return;
+        if (hasExtraEmptyScreen() || mScreenOrder.size() == 0) {
+            return;
+        }
         long finalScreenId = mScreenOrder.get(mScreenOrder.size() - 1);
 
-        if (finalScreenId == CUSTOM_CONTENT_SCREEN_ID) return;
+        if (finalScreenId == CUSTOM_CONTENT_SCREEN_ID) {
+            return;
+        }
         CellLayout finalScreen = mWorkspaceScreens.get(finalScreenId);
 
         // If the final screen is empty, convert it to the extra empty screen
@@ -1125,6 +1150,7 @@ public class Workspace extends PagedView
         return !mIsSwitchingState || (mTransitionProgress > 0.5f);
     }
 
+    @Override
     protected void onWindowVisibilityChanged(int visibility) {
         mLauncher.onWindowVisibilityChanged(visibility);
     }
@@ -1194,13 +1220,17 @@ public class Workspace extends PagedView
 
     @Override
     protected void determineScrollingStart(MotionEvent ev) {
-        if (!isFinishedSwitchingState()) return;
+        if (!isFinishedSwitchingState()) {
+            return;
+        }
 
         float deltaX = ev.getX() - mXDown;
         float absDeltaX = Math.abs(deltaX);
         float absDeltaY = Math.abs(ev.getY() - mYDown);
 
-        if (Float.compare(absDeltaX, 0f) == 0) return;
+        if (Float.compare(absDeltaX, 0f) == 0) {
+            return;
+        }
 
         float slope = absDeltaY / absDeltaX;
         float theta = (float) Math.atan(slope);
@@ -1695,7 +1725,9 @@ public class Workspace extends PagedView
             progress = Math.max(0, progress);
         }
 
-        if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) return;
+        if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) {
+            return;
+        }
 
         CellLayout cc = mWorkspaceScreens.get(CUSTOM_CONTENT_SCREEN_ID);
         if (progress > 0 && cc.getVisibility() != VISIBLE && !workspaceInModalState()) {
@@ -2546,7 +2578,9 @@ public class Workspace extends PagedView
 
     boolean willCreateUserFolder(ItemInfo info, CellLayout target, int[] targetCell, float
             distance, boolean considerTimeout) {
-        if (distance > mMaxDistanceForFolderCreation) return false;
+        if (distance > mMaxDistanceForFolderCreation) {
+            return false;
+        }
         View dropOverView = target.getChildAt(targetCell[0], targetCell[1]);
 
         if (dropOverView != null) {
@@ -2575,7 +2609,9 @@ public class Workspace extends PagedView
 
     boolean willAddToExistingUserFolder(Object dragInfo, CellLayout target, int[] targetCell,
                                         float distance) {
-        if (distance > mMaxDistanceForFolderCreation) return false;
+        if (distance > mMaxDistanceForFolderCreation) {
+            return false;
+        }
         View dropOverView = target.getChildAt(targetCell[0], targetCell[1]);
 
         if (dropOverView != null) {
@@ -3226,7 +3262,9 @@ public class Workspace extends PagedView
     @Override
     public void onDragOver(DragObject d) {
         // Skip drag over events while we are dragging over side pages
-        if (mInScrollArea || !transitionStateShouldAllowDrop()) return;
+        if (mInScrollArea || !transitionStateShouldAllowDrop()) {
+            return;
+        }
 
         Rect r = new Rect();
         CellLayout layout = null;
@@ -3239,7 +3277,9 @@ public class Workspace extends PagedView
         }
 
         // Ensure that we have proper spans for the item that we are dropping
-        if (item.spanX < 0 || item.spanY < 0) throw new RuntimeException("Improper spans found");
+        if (item.spanX < 0 || item.spanY < 0) {
+            throw new RuntimeException("Improper spans found");
+        }
         mDragViewVisualCenter = d.getVisualCenter(mDragViewVisualCenter);
 
         final View child = (mDragInfo == null) ? null : mDragInfo.cell;
@@ -3405,6 +3445,7 @@ public class Workspace extends PagedView
             this.cellY = cellY;
         }
 
+        @Override
         public void onAlarm(Alarm alarm) {
             if (mDragFolderRingAnimator != null) {
                 // This shouldn't happen ever, but just in case, make sure we clean up the mess.
@@ -3437,6 +3478,7 @@ public class Workspace extends PagedView
             this.dragView = dragView;
         }
 
+        @Override
         public void onAlarm(Alarm alarm) {
             int[] resultSpan = new int[2];
             mTargetCell = findNearestArea((int) mDragViewVisualCenter[0],
@@ -3837,10 +3879,12 @@ public class Workspace extends PagedView
     /**
      * Called at the end of a drag which originated on the workspace.
      */
+    @Override
     public void onDropCompleted(final View target, final DragObject d,
                                 final boolean isFlingToDelete, final boolean success) {
         if (mDeferDropAfterUninstall) {
             mDeferredAction = new Runnable() {
+                @Override
                 public void run() {
                     onDropCompleted(target, d, isFlingToDelete, success);
                     mDeferredAction = null;
@@ -3907,6 +3951,11 @@ public class Workspace extends PagedView
         }
     }
 
+    /**
+     * 更新某个Item在数据库中的位置信息
+     *
+     * @param cl 该Item所属的那一屏
+     */
     void updateItemLocationsInDatabase(CellLayout cl) {
         int count = cl.getShortcutsAndWidgets().getChildCount();
 
