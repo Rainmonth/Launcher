@@ -102,8 +102,8 @@ public class DeviceProfile {
     private int searchBarSpaceHeightPx;
 
     public DeviceProfile(Context context, InvariantDeviceProfile inv,
-            Point minSize, Point maxSize,
-            int width, int height, boolean isLandscape) {
+                         Point minSize, Point maxSize,
+                         int width, int height, boolean isLandscape) {
 
         this.inv = inv;
         this.isLandscape = isLandscape;
@@ -242,7 +242,9 @@ public class DeviceProfile {
         allAppsNumPredictiveCols = numPredictiveAppCols;
     }
 
-    /** Returns the search bar top offset */
+    /**
+     * Returns the search bar top offset
+     */
     private int getSearchBarTopOffset() {
         if (isTablet && !isVerticalBarLayout()) {
             return 4 * edgeMarginPx;
@@ -251,7 +253,9 @@ public class DeviceProfile {
         }
     }
 
-    /** Returns the search bar bounds in the current orientation */
+    /**
+     * Returns the search bar bounds in the current orientation
+     */
     public Rect getSearchBarBounds(boolean isLayoutRtl) {
         Rect bounds = new Rect();
         if (isLandscape && transposeLayoutWithOrientation) {
@@ -278,13 +282,15 @@ public class DeviceProfile {
                 bounds.set(desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.left,
                         getSearchBarTopOffset(),
                         availableWidthPx - (desiredWorkspaceLeftRightMarginPx -
-                        defaultWidgetPadding.right), searchBarSpaceHeightPx);
+                                defaultWidgetPadding.right), searchBarSpaceHeightPx);
             }
         }
         return bounds;
     }
 
-    /** Returns the workspace padding in the specified orientation */
+    /**
+     * Returns the workspace padding in the specified orientation
+     */
     public Rect getWorkspacePadding(boolean isLayoutRtl) {
         Rect searchBarBounds = getSearchBarBounds(isLayoutRtl);
         Rect padding = new Rect();
@@ -323,6 +329,12 @@ public class DeviceProfile {
         return padding;
     }
 
+    /**
+     * 获取Workspace页间距
+     *
+     * @param isLayoutRtl 是否从右到左布局
+     * @return 页间距
+     */
     private int getWorkspacePageSpacing(boolean isLayoutRtl) {
         if ((isLandscape && transposeLayoutWithOrientation) || isLargeTablet) {
             // In landscape mode the page spacing is set to the default.
@@ -356,6 +368,7 @@ public class DeviceProfile {
     public static int calculateCellWidth(int width, int countX) {
         return width / countX;
     }
+
     public static int calculateCellHeight(int height, int countY) {
         return height / countY;
     }
@@ -372,6 +385,12 @@ public class DeviceProfile {
         return isVerticalBarLayout() || isLargeTablet;
     }
 
+    /**
+     * 获取ViewGroup中占据控件的直接子View个数
+     *
+     * @param parent ViewGroup容器
+     * @return 非GONE直接子View个数
+     */
     private int getVisibleChildCount(ViewGroup parent) {
         int visibleChildren = 0;
         for (int i = 0; i < parent.getChildCount(); i++) {
@@ -382,6 +401,11 @@ public class DeviceProfile {
         return visibleChildren;
     }
 
+    /**
+     * 控制Launcher界面的展示
+     *
+     * @param launcher Launcher实例
+     */
     public void layout(Launcher launcher) {
         FrameLayout.LayoutParams lp;
         boolean hasVerticalBarLayout = isVerticalBarLayout();
@@ -476,7 +500,7 @@ public class DeviceProfile {
 
             int visibleChildCount = getVisibleChildCount(overviewMode);
             int totalItemWidth = visibleChildCount * overviewModeBarItemWidthPx;
-            int maxWidth = totalItemWidth + (visibleChildCount-1) * overviewModeBarSpacerWidthPx;
+            int maxWidth = totalItemWidth + (visibleChildCount - 1) * overviewModeBarSpacerWidthPx;
 
             lp.width = Math.min(availableWidthPx, maxWidth);
             lp.height = overviewButtonBarHeight;
@@ -484,7 +508,7 @@ public class DeviceProfile {
 
             if (lp.width > totalItemWidth && visibleChildCount > 1) {
                 // We have enough space. Lets add some margin too.
-                int margin = (lp.width - totalItemWidth) / (visibleChildCount-1);
+                int margin = (lp.width - totalItemWidth) / (visibleChildCount - 1);
                 View lastChild = null;
 
                 // Set margin of all visible children except the last visible child

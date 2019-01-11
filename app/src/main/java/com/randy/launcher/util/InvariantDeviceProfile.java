@@ -31,6 +31,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * 不变的设备信息相关参数信息定义
+ * 这里面要求Hotseat栏的图标总数必须为奇数，自定义Launcher时可以针对这个设置做下修改
+ */
 public class InvariantDeviceProfile {
 
     // This is a static that we use for the default icon size on a 4/5-inch phone
@@ -52,13 +56,13 @@ public class InvariantDeviceProfile {
     float minHeightDps;
 
     /**
-     * Number of icons per row and column in the workspace.
+     * Workspace里面有几行几列
      */
     public int numRows;
     public int numColumns;
 
     /**
-     * The minimum number of predicted apps in all apps.
+     * 所有APP界面最少有几栏
      */
     public int minAllAppsPredictionColumns;
 
@@ -73,13 +77,17 @@ public class InvariantDeviceProfile {
     public float iconTextSize;
 
     /**
-     * Number of icons inside the hotseat area.
+     * Hotseat有几个图标
      */
     public float numHotseatIcons;
+    /**
+     * Hotseat图标尺寸
+     */
     public float hotseatIconSize;
+
     public int defaultLayoutId;
 
-    // Derived invariant properties
+    // Hotseat中所有APP入口所处的位置
     public int hotseatAllAppsRank;
 
     public DeviceProfile landscapeProfile;

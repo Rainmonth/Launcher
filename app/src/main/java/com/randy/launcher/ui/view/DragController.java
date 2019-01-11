@@ -787,8 +787,9 @@ public class DragController {
         final int count = dropTargets.size();
         for (int i = count - 1; i >= 0; i--) {
             DropTarget target = dropTargets.get(i);
-            if (!target.isDropEnabled())
+            if (!target.isDropEnabled()) {
                 continue;
+            }
 
             target.getHitRectRelativeToDragLayer(r);
 
@@ -806,7 +807,7 @@ public class DragController {
         return null;
     }
 
-    public void setDragScoller(DragScroller scroller) {
+    public void setDragScroller(DragScroller scroller) {
         mDragScroller = scroller;
     }
 
@@ -880,6 +881,7 @@ public class DragController {
         ScrollRunnable() {
         }
 
+        @Override
         public void run() {
             if (mDragScroller != null) {
                 if (mDirection == SCROLL_LEFT) {

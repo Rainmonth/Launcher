@@ -19,8 +19,8 @@ public class RevealOutlineProvider extends ViewOutlineProvider {
     private final Rect mOval;
 
     /**
-     * @param x reveal center x
-     * @param y reveal center y
+     * @param x  reveal center x
+     * @param y  reveal center y
      * @param r0 initial radius
      * @param r1 final radius
      */
