@@ -177,7 +177,7 @@ public class Launcher extends Activity
         implements OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
         View.OnTouchListener, PagedView.PageSwitchListener, LauncherProviderChangeListener {
     public static final String TAG = "Launcher";
-    static final boolean LOGD = false;
+    static final boolean LOGD = true;
 
     static final boolean PROFILE_STARTUP = false;
     static final boolean DEBUG_WIDGETS = true;
@@ -1569,7 +1569,7 @@ public class Launcher extends Activity
     }
 
     /**
-     * Creates a view representing a shortcut.
+     * 根据ShortcutInfo创建快捷方式
      *
      * @param info The data structure describing the shortcut.
      */
@@ -1578,13 +1578,14 @@ public class Launcher extends Activity
     }
 
     /**
-     * Creates a view representing a shortcut inflated from the specified resource.
+     * 根据ShortcutInfo创建快捷方式具体实现
      *
      * @param parent The group the shortcut belongs to.
      * @param info   The data structure describing the shortcut.
      * @return A View inflated from layoutResId.
      */
     public View createShortcut(ViewGroup parent, ShortcutInfo info) {
+        Log.d(TAG, "createShortcut");
         BubbleTextView favorite = (BubbleTextView) mInflater.inflate(R.layout.app_icon,
                 parent, false);
         favorite.applyFromShortcutInfo(info, mIconCache);
@@ -1595,7 +1596,7 @@ public class Launcher extends Activity
     }
 
     /**
-     * Add a shortcut to the workspace.
+     * App快捷方式添加完成
      *
      * @param data The intent describing the shortcut.
      */
@@ -1651,7 +1652,7 @@ public class Launcher extends Activity
     }
 
     /**
-     * Add a widget to the workspace.
+     * widget添加完成
      *
      * @param appWidgetId The app widget id
      */
@@ -2706,7 +2707,7 @@ public class Launcher extends Activity
     }
 
     /**
-     * Event handler for an app shortcut click.
+     * 点击App快捷方式
      *
      * @param v The view that was clicked. Must be a tagged with a {@link ShortcutInfo}.
      */
@@ -2769,6 +2770,11 @@ public class Launcher extends Activity
         }
     }
 
+    /**
+     * 启动App详情Activity或者通过快捷方式启动App
+     *
+     * @param v
+     */
     @Thunk
     void startAppShortcutOrInfoActivity(View v) {
         Object tag = v.getTag();
@@ -2799,7 +2805,7 @@ public class Launcher extends Activity
     }
 
     /**
-     * Event handler for a folder icon click.
+     * 文件夹点击处理
      *
      * @param v The view that was clicked. Must be an instance of {@link FolderIcon}.
      */
@@ -3168,6 +3174,7 @@ public class Launcher extends Activity
     }
 
     private void growAndFadeOutFolderIcon(FolderIcon fi) {
+        Log.d(TAG, "growAndFadeOutFolderIcon");
         if (fi == null) {
             return;
         }
@@ -3196,6 +3203,7 @@ public class Launcher extends Activity
     }
 
     private void shrinkAndFadeInFolderIcon(final FolderIcon fi) {
+        Log.d(TAG, "shrinkAndFadeInFolderIcon");
         if (fi == null) {
             return;
         }
@@ -3568,6 +3576,9 @@ public class Launcher extends Activity
         return anim;
     }
 
+    /**
+     * 进入弹性加载拖拽模式
+     */
     public void enterSpringLoadedDragMode() {
         if (LOGD) {
             Log.d(TAG, String.format("enterSpringLoadedDragMode [mState=%s", mState.name()));
@@ -3584,6 +3595,13 @@ public class Launcher extends Activity
         mState = isAppsViewVisible() ? State.APPS_SPRING_LOADED : State.WIDGETS_SPRING_LOADED;
     }
 
+    /**
+     * 延迟退出弹性加载拖拽模式
+     *
+     * @param successfulDrop
+     * @param delay
+     * @param onCompleteRunnable
+     */
     public void exitSpringLoadedDragModeDelayed(final boolean successfulDrop, int delay,
                                                 final Runnable onCompleteRunnable) {
         if (mState != State.APPS_SPRING_LOADED && mState != State.WIDGETS_SPRING_LOADED) {
@@ -3608,6 +3626,9 @@ public class Launcher extends Activity
         }, delay);
     }
 
+    /**
+     * 退出弹性加载退出模式
+     */
     public void exitSpringLoadedDragMode() {
         if (mState == State.APPS_SPRING_LOADED) {
             showAppsView(true /* animated */, false /* resetListToTop */,

@@ -2633,6 +2633,7 @@ public class Workspace extends PagedView
     public boolean createUserFolderIfNecessary(View newView, long container, CellLayout target,
                                                int[] targetCell, float distance, boolean external, DragView dragView,
                                                Runnable postAnimationRunnable) {
+        //
         if (distance > mMaxDistanceForFolderCreation) {
             return false;
         }

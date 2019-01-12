@@ -107,7 +107,7 @@ import java.util.Set;
  */
 public class LauncherModel extends BroadcastReceiver
         implements LauncherAppsCompat.OnAppsChangedCallbackCompat {
-    static final boolean DEBUG_LOADERS = false;
+    static final boolean DEBUG_LOADERS = true;
     private static final boolean DEBUG_RECEIVER = false;
     private static final boolean REMOVE_UNRESTORED_ICONS = true;
 
@@ -1430,6 +1430,7 @@ public class LauncherModel extends BroadcastReceiver
     }
 
     public void startLoader(int synchronousBindPage, int loadFlags) {
+        Log.d(TAG, "startLoader");
         // Enable queue before starting loader. It will get disabled in Launcher#finishBindingItems
         InstallShortcutReceiver.enableInstallQueue();
         synchronized (mLock) {
@@ -1559,6 +1560,7 @@ public class LauncherModel extends BroadcastReceiver
                 final long workspaceWaitTime = DEBUG_LOADERS ? SystemClock.uptimeMillis() : 0;
 
                 mHandler.postIdle(new Runnable() {
+                    @Override
                     public void run() {
                         synchronized (LoaderTask.this) {
                             mLoadAndBindStepFinished = true;
@@ -1814,6 +1816,9 @@ public class LauncherModel extends BroadcastReceiver
             }
         }
 
+        /**
+         * 加载Workspace
+         */
         private void loadWorkspace() {
             final long t = DEBUG_LOADERS ? SystemClock.uptimeMillis() : 0;
 
@@ -1873,7 +1878,9 @@ public class LauncherModel extends BroadcastReceiver
                 final ArrayList<Long> itemsToRemove = new ArrayList<Long>();
                 final ArrayList<Long> restoredRows = new ArrayList<Long>();
                 final Uri contentUri = LauncherSettings.Favorites.CONTENT_URI;
-                if (DEBUG_LOADERS) Log.d(TAG, "loading model from " + contentUri);
+                if (DEBUG_LOADERS) {
+                    Log.d(TAG, "loading model from " + contentUri);
+                }
                 final Cursor c = contentResolver.query(contentUri, null, null, null, null);
 
                 // +1 for the hotseat (it can be larger than the workspace)
@@ -1967,6 +1974,7 @@ public class LauncherModel extends BroadcastReceiver
                                                     restored = false;
                                                 }
                                             } else if (validPkg) {
+                                                // 是否是有效的包名
                                                 intent = null;
                                                 if ((promiseType & ShortcutInfo.FLAG_AUTOINTALL_ICON) != 0) {
                                                     // We allow auto install apps to have their intent
@@ -2341,6 +2349,8 @@ public class LauncherModel extends BroadcastReceiver
                                         sBgItemsIdMap.put(appWidgetInfo.id, appWidgetInfo);
                                         sBgAppWidgets.add(appWidgetInfo);
                                     }
+                                    break;
+                                default:
                                     break;
                             }
                         } catch (Exception e) {

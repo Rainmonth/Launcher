@@ -76,9 +76,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Launcher提供的与其他应用数据交互的标准Api
+ *
+ * @author randy
+ */
 public class LauncherProvider extends ContentProvider {
     private static final String TAG = "LauncherProvider";
-    private static final boolean LOGD = false;
+    private static final boolean LOGD = true;
 
     private static final int DATABASE_VERSION = 26;
 
@@ -597,6 +602,11 @@ public class LauncherProvider extends ContentProvider {
             ManagedProfileHeuristic.processAllUsers(Collections.<UserHandleCompat>emptyList(), mContext);
         }
 
+        /**
+         * 创建workspaceScreens表
+         *
+         * @param db
+         */
         private void addWorkspacesTable(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE " + TABLE_WORKSPACE_SCREENS + " (" +
                     LauncherSettings.WorkspaceScreens._ID + " INTEGER PRIMARY KEY," +
@@ -605,6 +615,9 @@ public class LauncherProvider extends ContentProvider {
                     ");");
         }
 
+        /**
+         * 移除数据库中无效的Items（桌面上的和桌面文件夹里面的）
+         */
         private void removeOrphanedItems(SQLiteDatabase db) {
             // Delete items directly on the workspace who's screen id doesn't exist
             //  "DELETE FROM favorites WHERE screen NOT IN (SELECT _id FROM workspaceScreens)
@@ -750,6 +763,10 @@ public class LauncherProvider extends ContentProvider {
                     // DB Upgraded successfully
                     return;
                 }
+                default: {
+                    return;
+                }
+
             }
 
             // DB was not upgraded
