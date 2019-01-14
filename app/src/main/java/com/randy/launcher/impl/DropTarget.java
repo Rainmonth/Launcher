@@ -122,13 +122,6 @@ public interface DropTarget {
     boolean isDropEnabled();
 
     /**
-     * Handle an object being dropped on the DropTarget
-     *
-     * @param dragObject 拖动对象（里面封装了拖动的一些信息）
-     */
-    void onDrop(DragObject dragObject);
-
-    /**
      * 拖进
      *
      * @param dragObject 拖动对象（里面封装了拖动的一些信息）
@@ -150,19 +143,26 @@ public interface DropTarget {
     void onDragExit(DragObject dragObject);
 
     /**
-     * Handle an object being dropped as a result of flinging to delete and will be called in place
-     * of onDrop().  (This is only called on objects that are set as the DragController's
-     * fling-to-delete target.
-     */
-    void onFlingToDelete(DragObject dragObject, PointF vec);
-
-    /**
      * Check if a drop action can occur at, or near, the requested location.
      * This will be called just before onDrop.
      *
      * @return True if the drop will be accepted, false otherwise.
      */
     boolean acceptDrop(DragObject dragObject);
+
+    /**
+     * Handle an object being dropped on the DropTarget
+     *
+     * @param dragObject 拖动对象（里面封装了拖动的一些信息）
+     */
+    void onDrop(DragObject dragObject);
+
+    /**
+     * Handle an object being dropped as a result of flinging to delete and will be called in place
+     * of onDrop().  (This is only called on objects that are set as the DragController's
+     * fling-to-delete target.
+     */
+    void onFlingToDelete(DragObject dragObject, PointF vec);
 
     void prepareAccessibilityDrop();
 

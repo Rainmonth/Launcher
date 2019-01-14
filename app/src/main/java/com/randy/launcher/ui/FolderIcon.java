@@ -68,6 +68,7 @@ import java.util.ArrayList;
 
 /**
  * An icon that can appear on in the workspace representing an {@link Folder}.
+ * @author randy
  */
 public class FolderIcon extends FrameLayout implements FolderInfo.FolderListener {
     @Thunk
@@ -373,8 +374,15 @@ public class FolderIcon extends FrameLayout implements FolderInfo.FolderListener
         mInfo.add(item);
     }
 
+    /**
+     * App图标（或快捷方式）拖进文件夹
+     *
+     * @param dragInfo 被拖动的对象
+     */
     public void onDragEnter(Object dragInfo) {
-        if (mFolder.isDestroyed() || !willAcceptItem((ItemInfo) dragInfo)) return;
+        if (mFolder.isDestroyed() || !willAcceptItem((ItemInfo) dragInfo)) {
+            return;
+        }
         CellLayout.LayoutParams lp = (CellLayout.LayoutParams) getLayoutParams();
         CellLayout layout = (CellLayout) getParent().getParent();
         mFolderRingAnimator.setCell(lp.cellX, lp.cellY);

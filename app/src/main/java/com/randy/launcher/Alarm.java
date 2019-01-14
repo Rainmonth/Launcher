@@ -21,7 +21,7 @@ import android.os.Handler;
 import com.randy.launcher.impl.OnAlarmListener;
 
 /**
- * 可以取消执行的Runnable（实际上是通过增加bool变量来控制是否真正只想OnAlarmListener的onAlarm方法的
+ * 可以取消执行的Runnable（实际上是通过增加bool变量来控制是否真正执行OnAlarmListener的onAlarm方法的
  * @author randy
  */
 public class Alarm implements Runnable {

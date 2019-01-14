@@ -55,6 +55,8 @@ import java.util.HashSet;
 public class DragController {
     private static final String TAG = "Launcher.DragController";
 
+    private boolean LOGD = true;
+
     /**
      * Indicates the drag is a move.
      */
@@ -250,6 +252,9 @@ public class DragController {
     public DragView startDrag(Bitmap b, int dragLayerX, int dragLayerY,
                               DragSource source, Object dragInfo, int dragAction, Point dragOffset, Rect dragRegion,
                               float initialDragViewScale, boolean accessible) {
+        if (LOGD) {
+            Log.d(TAG, "startDrag");
+        }
         if (PROFILE_DRAWING_DURING_DRAG) {
             android.os.Debug.startMethodTracing("Launcher");
         }

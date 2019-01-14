@@ -172,6 +172,7 @@ public class FolderPagedView extends PagedView {
 
     /**
      * Binds items to the layout.
+     *
      * @return list of items that could not be bound, probably because we hit the max size limit.
      */
     public ArrayList<ShortcutInfo> bindItems(ArrayList<ShortcutInfo> items) {
@@ -299,10 +300,9 @@ public class FolderPagedView extends PagedView {
      * It essentially removes all views from all the pages and then adds them again in appropriate
      * page.
      *
-     * @param list the ordered list of children.
+     * @param list      the ordered list of children.
      * @param itemCount if greater than the total children count, empty spaces are left
-     * at the end, otherwise it is ignored.
-     *
+     *                  at the end, otherwise it is ignored.
      */
     public void arrangeChildren(ArrayList<View> list, int itemCount) {
         arrangeChildren(list, itemCount, true);
@@ -424,6 +424,11 @@ public class FolderPagedView extends PagedView {
                 R.drawable.ic_pageindicator_default_folder);
     }
 
+    /**
+     * 当前页是否已满
+     *
+     * @return 如果不允许滑动且已超过最大容量，返回true，否则，返回false
+     */
     public boolean isFull() {
         return !ALLOW_FOLDER_SCROLL && getItemCount() >= mMaxItemsPerPage;
     }
@@ -443,6 +448,7 @@ public class FolderPagedView extends PagedView {
 
     /**
      * Iterates over all its items in a reading order.
+     *
      * @return the view for which the operator returned true.
      */
     public View iterateOverItems(Workspace.ItemOperator op) {
